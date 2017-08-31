@@ -37,6 +37,7 @@ const api = {
         let p = new t.Pointer(new Buffer(1200), 0);
 
         let rawData = NetEvent.pack(p, event);
+        // Todo: Here it crashes.
         // queue.push(new Buffer(rawData.toString()));
     },
     popState(){
