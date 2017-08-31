@@ -26,7 +26,7 @@ module.exports = {
                     (api, data, event) => {
                         console.log("Button 1", data, event);
                     },
-                    reSend("MENU_TEST"),
+                    reSend("BUTTON_UP"),
                     (api, data, event) => {
                         api.pushState("record");
                     }

@@ -27,18 +27,25 @@ function popMessage() {
 
 const api = {
     send(eventType, data){
-        // TODO: Make it work :)
         console.log("api.send:", QueueEventEnum.indexOf(eventType), eventType, data);
-        let event = {
-            recipient: 0,
-            id: QueueEventEnum.indexOf(eventType),
-            data: JSON.stringify(data)
-        };
-        let p = new t.Pointer(new Buffer(1200), 0);
+        let charray = [];
+        Array.from(JSON.stringify(data)).forEach((item) => {
+            charray.push(item.charCodeAt());
+        });
 
-        let rawData = NetEvent.pack(p, event);
-        // Todo: Here it crashes.
-        // queue.push(new Buffer(rawData.toString()));
+        let evnt = {
+            recipient: 3,
+            id: QueueEventEnum.indexOf(eventType),
+            data: charray
+        };
+        let p = new t.Pointer(new Buffer(8196), 0);
+
+        NetEvent.pack(p, evnt);
+
+        queue.push(p.buf);
+        let event = NetEvent.unpack(p);
+        event.data = event.data.slice(0, event.data.indexOf(0)).map(c => String.fromCharCode(c)).join("")
+        console.log(event);
     },
     popState(){
         let currentState = stateStack[stateStack.length - 1];
@@ -46,7 +53,7 @@ const api = {
         stateDefinitions[lastState[0]].resume(currentState[0], JSONClone(currentState[1]))
     },
     pushState(newStateName){
-        if(!stateDefinitions.hasOwnProperty(newStateName)){
+        if (!stateDefinitions.hasOwnProperty(newStateName)) {
             return;
         }
 
@@ -92,11 +99,6 @@ let init = () => {
 };
 init();
 
-eventHandler({
-    id: 2,
-    event: 'ROTARY_LEFT',
-    data: "Button2"
-});
 eventHandler({
     id: 3,
     event: 'ROTARY_RIGHT',
