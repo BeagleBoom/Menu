@@ -1,0 +1,15 @@
+{
+  "name": "menu",
+  "version": "1.0.0",
+  "description": "Handles beagleBOOM's menu entries",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "svmq": "^1.0.6",
+    "typebase": "^1.0.1"
+  }
+}
