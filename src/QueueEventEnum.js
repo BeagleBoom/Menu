@@ -5,5 +5,5 @@ module.exports =
         "ROTARY_LEFT",
         "ROTARY_RIGHT",
         "ADC_VALUES",
-        "MENU_TEST"
+        "MENU_ITEMS"
     ];

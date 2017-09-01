@@ -1,60 +1,22 @@
-const Arg0 = function (value) {
-    return (args) => args == value;
-};
-const Else = () => true;
-const reSend =
-    (newType) => (api, data, event) => api.send(newType, event.data);
-
-
-module.exports = {
-    "root": {
-        name: "root",
-        data: {
-            "asd": "dsa"
-            // initiale Variablen
-        },
-        resume: (name, returnData) => {
-            console.log("Resume root from:", name, returnData);
-        },
-        start: (name) => {
-            console.log("Start:", name, returnData);
-
-        },
-        events: {
-            "ROTARY_RIGHT": [
-                [Arg0("Button1"), [
-                    (api, data, event) => {
-                        console.log("Button 1", data, event);
-                    },
-                    reSend("BUTTON_UP"),
-                    (api, data, event) => {
-                        api.pushState("record");
-                    }
-                ]],
-                [Else, [() => console.log("else")]]
-            ]
+module.exports = (api) => {
+    const helper = require("./StateFunctions");
+    const fs = require('fs');
+    let files = fs.readdirSync('./src/states');
+    let ret = {};
+    files.forEach((file) => {
+        let itemname = file.slice(0, -3);
+        ret[itemname] = require("./states/" + file)(helper);
+        if(!ret[itemname].hasOwnProperty("data")){
+            ret[itemname].data = {};
         }
-    },
-    "record": {
-        name: "record",
-        data: {
-            "moep": "peom"
-        },
-        resume: (name, returnData) => {
-            console.log("Resume record from", name, returnData);
-        },
-        events: {
-            "ROTARY_LEFT": [
-                [Arg0("Button2"), [
-                    (api, data, event) => {
-                        console.log("Button 2", data, event)
-                    },
-                    (api, data, event) => {
-                        api.popState();
-                    }
-                ],
-                ]
-            ]
+        ret[itemname].data.initialized = false;
+        let captions = ret[itemname].captions;
+        if (captions !== undefined) {
+            api.send("MENU_ITEMS", {
+                screen: ret[itemname].name,
+                captions: captions
+            });
         }
-    }
+    });
+    return ret;
 };
