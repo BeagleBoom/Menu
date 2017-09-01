@@ -1,5 +1,6 @@
 module.exports =
     [
+        "NONE",
         "BUTTON_DOWN",
         "BUTTON_UP",
         "ROTARY_LEFT",

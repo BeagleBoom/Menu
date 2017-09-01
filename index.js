@@ -23,7 +23,7 @@ function popMessage() {
         let bufferPointer = new t.Pointer(new Buffer(data));
         let event = NetEvent.unpack(bufferPointer);
         event.data = JSON.parse(event.data.slice(0, event.data.indexOf(0)).map(c => String.fromCharCode(c)).join(""));
-        // todo: remove this after fix in Queue
+        // fixme: remove this after fix in Queue
         [event.id, event.recipient] = [event.recipient, event.id];
         event.event = QueueEventEnum[event.id];
         eventHandler(event);
