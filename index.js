@@ -8,20 +8,28 @@ const NetEvent = require("./src/NetEvent");
 
 let stateStack = [];
 
+const type = process.argv[2];
+if (type === undefined) {
+    console.error("Queue channel argument missing!");
+    console.error("\t try running the process:");
+    console.error("\t\t" + process.argv[0] + " " + process.argv[1] + " <channelnumber>");
+    process.exit(-1);
+}
 
 function popMessage() {
-    queue.pop((err, data) => {
+    queue.pop({type: process.argv[2]}, (err, data) => {
+
         if (err) throw err;
         let bufferPointer = new t.Pointer(new Buffer(data));
         let event = NetEvent.unpack(bufferPointer);
         event.data = JSON.parse(event.data.slice(0, event.data.indexOf(0)).map(c => String.fromCharCode(c)).join(""));
+        // todo: remove this after fix in Queue
         [event.id, event.recipient] = [event.recipient, event.id];
         event.event = QueueEventEnum[event.id];
         eventHandler(event);
         setImmediate(popMessage);
     });
 }
-//popMessage();
 
 const api = {
     send(eventType, data){
@@ -31,18 +39,16 @@ const api = {
             charray.push(item.charCodeAt());
         });
 
-        let evnt = {
+        let event = {
             recipient: 3,
             id: QueueEventEnum.indexOf(eventType),
             data: charray
         };
         let p = new t.Pointer(new Buffer(8196), 0);
 
-        NetEvent.pack(p, evnt);
+        NetEvent.pack(p, event);
 
         queue.push(p.buf);
-        let event = NetEvent.unpack(p);
-        event.data = event.data.slice(0, event.data.indexOf(0)).map(c => String.fromCharCode(c)).join("");
     },
     popState(){
         let currentState = stateStack[stateStack.length - 1];
@@ -119,30 +125,32 @@ init();
 
 eventHandler({
     id: 1,
-    event: 'BUTTON_DOWN',
+    event: "BUTTON_DOWN",
     data: "A"
 });
 
 eventHandler({
     id: 1,
-    event: 'BUTTON_DOWN',
+    event: "BUTTON_DOWN",
     data: "BACK"
 });
 
 eventHandler({
     id: 1,
-    event: 'BUTTON_DOWN',
+    event: "BUTTON_DOWN",
     data: "D"
 });
 
 eventHandler({
     id: 1,
-    event: 'BUTTON_DOWN',
+    event: "BUTTON_DOWN",
     data: "BACK"
 });
 
 eventHandler({
     id: 1,
-    event: 'BUTTON_DOWN',
+    event: "BUTTON_DOWN",
     data: "D"
 });
+
+//popMessage();
