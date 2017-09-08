@@ -6,5 +6,16 @@ module.exports =
         "ROTARY_LEFT",
         "ROTARY_RIGHT",
         "ADC_VALUES",
-        "MENU_ITEMS"
+        "MENU_ITEMS",
+        "KEYBOARD",
+        "FREESOUND_SEARCH",
+        "FREESOUND_PLAY",
+        "FREESOUND_SEARCHRESULTS",
+        "FREESOUND_PREV",
+        "FREESOUND_NEXT",
+        "RESULTS_PREV",
+        "RESULTS_NEXT",
+        "WAITING",
+        "LOCAL_PLAY",
+        "STOP_PLAYBACK"
     ];

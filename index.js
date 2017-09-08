@@ -32,7 +32,7 @@ function popMessage() {
 }
 
 const api = {
-    send(eventType, data){
+    send(eventType, data) {
         console.log("api.send:", eventType, data);
         let charray = [];
         Array.from(JSON.stringify(data)).forEach((item) => {
@@ -50,13 +50,15 @@ const api = {
 
         queue.push(p.buf);
     },
-    popState(){
+    popState() {
         let currentState = stateStack[stateStack.length - 1];
         let lastState = stateStack[(stateStack.length >= 2 ? stateStack.length - 2 : 0)];
         stateDefinitions[lastState.name].resume(currentState.name, JSONClone(currentState.data));
-        stateStack.pop();
+        if (currentState !== lastState) {
+            stateStack.pop();
+        }
     },
-    pushState(newStateName){
+    pushState(newStateName, initData = {}) {
         if (!stateDefinitions.hasOwnProperty(newStateName)) {
             console.error("Unknown state name: ", newStateName);
             return;
@@ -66,12 +68,11 @@ const api = {
         let currentState = stateStack[(stateStack.length > 0 ? stateStack.length - 1 : 0)];
         let oldInstance = newState.data.initialized;
         if (!oldInstance) {
-            newState.start(currentState.name);
+            newState.start(currentState.name, initData);
             newState.data.initialized = true;
         } else {
             newState.resume(currentState.name, JSONClone(currentState.data));
         }
-
         stateStack.push({name: newState.name, data: JSONClone(newState.data)});
 
     }
@@ -80,21 +81,13 @@ const stateDefinitions = require("./src/StateDefinitions")(api);
 
 
 const eventHandler = (rawEvent) => {
-    let currentState = stateStack[(stateStack.length > 0 ? stateStack.length - 1 : 0)];
-    let state = stateDefinitions[currentState.name];
-
-    /** Special case: Back Button was pushed */
-    if (rawEvent.data == "BACK") {
-        if (rawEvent.event == "BUTTON_DOWN") {
-            console.log("Returning to previous state...");
-            api.popState();
+    function performStateEvents(state, rawEvent) {
+        if (!state.events.hasOwnProperty(rawEvent.event)) {
+            state = stateDefinitions["_default"];
+            if (!state.events.hasOwnProperty(rawEvent.event)) {
+                return;
+            }
         }
-        return;
-    }
-
-    if (!state.hasOwnProperty("events")) return;
-
-    if (state.events.hasOwnProperty(rawEvent.event)) {
         state.events[rawEvent.event].every((event) => {
             if (event !== undefined) {
                 if (event[0](rawEvent.data)) {
@@ -108,6 +101,13 @@ const eventHandler = (rawEvent) => {
             }
         });
     }
+
+    let currentState = stateStack[(stateStack.length > 0 ? stateStack.length - 1 : 0)];
+    let state = stateDefinitions[currentState.name];
+
+    if (!state.hasOwnProperty("events")) return;
+
+    performStateEvents(state, rawEvent);
 };
 
 function JSONClone(data) {
@@ -125,31 +125,31 @@ init();
 
 eventHandler({
     id: 1,
-    event: "BUTTON_DOWN",
+    event: "BUTTON_UP",
     data: "A"
 });
 
 eventHandler({
     id: 1,
-    event: "BUTTON_DOWN",
+    event: "BUTTON_UP",
     data: "BACK"
 });
 
 eventHandler({
     id: 1,
-    event: "BUTTON_DOWN",
+    event: "BUTTON_UP",
     data: "D"
 });
 
 eventHandler({
     id: 1,
-    event: "BUTTON_DOWN",
+    event: "BUTTON_UP",
     data: "BACK"
 });
 
 eventHandler({
     id: 1,
-    event: "BUTTON_DOWN",
+    event: "BUTTON_UP",
     data: "D"
 });
 

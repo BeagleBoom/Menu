@@ -4,13 +4,13 @@ module.exports = ({Arg0, Else}) => {
         title: "Start",
         info: "Please choose whether you want to record or search a sample.",
         captions: {
-            "A": "Search Sample",
-            "D": "Record Sample"
+            "A": "Load",
+            "C": "Search",
+            "D": "Record"
         },
 
         data: {
-            "asd": "dsa"
-            // initiale Variablen
+            // initial variables
         },
         resume: (name, returnData) => {
             console.log("Resume root from:", name, returnData);
@@ -20,20 +20,22 @@ module.exports = ({Arg0, Else}) => {
         },
 
         events: {
-            "BUTTON_DOWN": [
+            "BUTTON_UP": [
                 [Arg0("A"), [
                     (api, data, event) => {
-                        console.log("Switching to search sample", data, event);
-                    },
+                        console.log("Switching to load sample", data, event);
+                        api.pushState("load_sample");
+                    }
+                ]],
+                [Arg0("C"), [
                     (api, data, event) => {
+                        console.log("Switching to search sample", data, event);
                         api.pushState("sample_search");
                     }
                 ]],
                 [Arg0("D"), [
                     (api, data, event) => {
                         console.log("Switching to record sample", data, event);
-                    },
-                    (api, data, event) => {
                         api.pushState("sample_record");
                     }
                 ]],
