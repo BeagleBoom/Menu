@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+            crossorigin="anonymous"></script>
+    <script defer src="/fa/fontawesome-all.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-info btn-block" id="BACK">Back</button>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <button class="btn btn-info btn-block" id="A">A</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-info btn-block" id="B">B</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-info btn-block" id="C">C</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-info btn-block" id="D">D</button>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <div class="btn-group" role="group">
+                <button type="button" id="R1_LEFT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <button type="button" id="R1" class="btn btn-secondary">R1</button>
+                <button type="button" id="R1_RIGHT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="btn-group" role="group">
+                <button type="button" id="R2_LEFT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <button type="button" id="R2" class="btn btn-secondary">R2</button>
+                <button type="button" id="R2_RIGHT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="btn-group" role="group">
+                <button type="button" id="R3_LEFT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <button type="button" id="R3" class="btn btn-secondary">R3</button>
+                <button type="button" id="R3_RIGHT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="btn-group" role="group">
+                <button type="button" id="R4_LEFT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <button type="button" id="R4" class="btn btn-secondary">R4</button>
+                <button type="button" id="R4_RIGHT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("button").on("click", function (evt) {
+        let id = $(this).attr("id");
+        fetch("/press/" + id);
+    });
+</script>
+</body>
+
+</html>

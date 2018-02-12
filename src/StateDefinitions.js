@@ -10,19 +10,6 @@ module.exports = (api) => {
             ret[itemname].data = {};
         }
         ret[itemname].data.initialized = false;
-        let captions = ret[itemname].captions;
-        if (ret[itemname].name === undefined ||
-            ret[itemname] === "") {
-            console.error("Mandatory field 'name' is not set for: " + itemname + ". Won't sent event.");
-            return;
-        }
-        api.send("MENU_ITEMS", {
-            screen: ret[itemname].name,
-            captions: captions || {},
-            title: ret[itemname].title || "",
-            info: ret[itemname].info || ""
-        });
-
     });
     return ret;
 };

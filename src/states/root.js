@@ -23,23 +23,19 @@ module.exports = ({Arg0, Else}) => {
             "BUTTON_UP": [
                 [Arg0("A"), [
                     (api, data, event) => {
-                        console.log("Switching to load sample", data, event);
                         api.pushState("load_sample");
                     }
                 ]],
                 [Arg0("C"), [
                     (api, data, event) => {
-                        console.log("Switching to search sample", data, event);
                         api.pushState("sample_search");
                     }
                 ]],
                 [Arg0("D"), [
                     (api, data, event) => {
-                        console.log("Switching to record sample", data, event);
                         api.pushState("sample_record");
                     }
-                ]],
-                [Else, [() => console.log("no match, idling..")]]
+                ]]
             ]
         }
     };
