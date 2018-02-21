@@ -75,22 +75,17 @@
 
 </style>
 
-<script>
-    var i = false;
-    setInterval(function () {
-        document.body.style.backgroundColor = i ? "white" : "black";
-        i = !i;
-    }, 1000);
-</script>
-
-<!--<script type="text/javascript">
-    const socket = new WebSocket("ws://localhost:8080/");
+<script type="text/javascript">
+    var socket = new WebSocket("ws://localhost:8080/");
     socket.onmessage = function (event) {
-        let {message, type} = JSON.parse(event.data);
+        var tmp = JSON.parse(event.data);
+        var message = tmp.message;
+        var type = tmp.type;
+        var views = {};
 
-        let views = {};
+        document.getElementById("content").innerText = event;
 
-        switch (type) {
+        /*switch (type) {
             case "debug":
                 if (Array.isArray(message)) {
                     console.log(...message);
@@ -126,7 +121,7 @@
                     }
                 }
                 break;
-        }
+        }*/
     }
-</script>-->
+</script>
 </html>
