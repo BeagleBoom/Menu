@@ -6,7 +6,7 @@ if (queueTypeId === undefined) {
     process.exit(-1);
 }
 
-const queue = require("./lib/messageQueue")(1337, queueTypeId);
+const queue = require("./lib/messageQueue")(1337, parseInt(queueTypeId));
 const socket = require("./lib/socketConnection")(8080);
 
 const StateStack = require("./lib/stateStack");
