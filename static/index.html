@@ -30,7 +30,7 @@
 <style>
     html {
         background: white;
-        padding:0;
+        padding: 0;
     }
 
     body {
@@ -39,8 +39,8 @@
         background: black;
         position: relative;
         padding: 0;
-        margin:0;
-        overflow:hidden;
+        margin: 0;
+        overflow: hidden;
     }
 
     .bottom {
@@ -75,6 +75,7 @@
 
 </style>
 <script type="text/javascript">
+    alert("HIHO");
     const socket = new WebSocket("ws://localhost:8080/");
     socket.onmessage = function (event) {
         let {message, type} = JSON.parse(event.data);
@@ -83,9 +84,9 @@
 
         switch (type) {
             case "debug":
-                if(Array.isArray(message)){
+                if (Array.isArray(message)) {
                     console.log(...message);
-                }else{
+                } else {
                     console.log(message);
                 }
                 break;
