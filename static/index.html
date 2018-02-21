@@ -82,8 +82,12 @@
         var message = tmp.message;
         var type = tmp.type;
         var views = {};
-
-        switch (type) {
+        document.getElementById("content").innerText = JSON.stringify([
+            Array.hasOwnProperty("isArray"),
+            Promise,
+            fetch
+        ]);
+        /*switch (type) {
             case "debug":
                 if (Array.isArray(message)) {
                     console.log(...message);
@@ -119,7 +123,7 @@
                     }
                 }
                 break;
-        }
+        }*/
     }
 </script>
 </html>
