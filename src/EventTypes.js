@@ -3,21 +3,21 @@ const fs = require("fs");
 const {spawnSync}=require("child_process");
 
 const command = "gcc";
-const args = "-E -Wp,-v -xc /dev/null".split(" ")
+const args = "-E -Wp,-v -xc /dev/null".split(" ");
 
 let {stdout, stderr} = spawnSync(command, args, {stdio: []});
 
 [stdout, stderr] = [stdout, stderr].map(s=>s.toString().split("\n"));
 
 let data = stderr
-        .slice(stderr.findIndex(e=>e.indexOf("#include <...>") != -1) + 1)
+        .slice(stderr.findIndex(e => e.indexOf("#include <...>") !== -1) + 1)
         .map(l=>l.trim())
-        .filter(l=>l[0] == "/")
+        .filter(l => l[0] === "/")
         .map(p=>path.join(p, "EventQueue"))
         .filter(p=>fs.existsSync(p))
     ;
 
-if (data.length == 0) {
+if (data.length === 0) {
     throw "Could not find EventQueue Lib!!";
 }
 
@@ -36,11 +36,11 @@ out = out.split("\n")
     ), [])
     .filter(l=>l.length > 0)
     .reduce(({out, level}, c)=> {
-        if (c == "/*") {
+        if (c === "/*") {
             level++;
-        } else if (c == "*/") {
+        } else if (c === "*/") {
             level--;
-        } else if (level == 0) {
+        } else if (level === 0) {
             out.push(c);
         }
         return {out, level};

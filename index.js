@@ -9,7 +9,6 @@ if (queueTypeId === undefined) {
 const queue = require("./lib/messageQueue")(1337, queueTypeId);
 const socket = require("./lib/socketConnection")(8080);
 
-
 const StateStack = require("./lib/stateStack");
 const stack = new StateStack({
     sendEvent: queue.send,
