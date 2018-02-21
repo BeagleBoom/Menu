@@ -74,8 +74,16 @@
     }
 
 </style>
-<script type="text/javascript">
-    alert("HIHO");
+
+<script>
+    var i = false;
+    setInterval(function () {
+        document.body.style.backgroundColor = i ? "white" : "black";
+        i = !i;
+    }, 1000);
+</script>
+
+<!--<script type="text/javascript">
     const socket = new WebSocket("ws://localhost:8080/");
     socket.onmessage = function (event) {
         let {message, type} = JSON.parse(event.data);
@@ -120,5 +128,5 @@
                 break;
         }
     }
-</script>
+</script>-->
 </html>
