@@ -82,11 +82,16 @@
         var message = tmp.message;
         var type = tmp.type;
         var views = {};
-        document.getElementById("content").innerText = JSON.stringify([
-            Array.hasOwnProperty("isArray"),
-            Promise,
-            fetch
-        ]);
+        try {
+            document.getElementById("content").innerText = JSON.stringify([
+                Array.hasOwnProperty("isArray"),
+                Promise === undefined,
+                fetch === undefined
+            ]);
+        } catch (e) {
+            document.getElementById("content").innerText = "E: " + e;
+        }
+
         /*switch (type) {
             case "debug":
                 if (Array.isArray(message)) {
