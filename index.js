@@ -15,7 +15,7 @@ const stack = new StateStack({
     display: socket.display
 });
 
-const eventHandler = stack.processEvent;
+const eventHandler = (arg) => stack.processEvent(arg);
 queue.on("event", eventHandler);
 socket.on("remote", eventHandler);
 //queue.start();
