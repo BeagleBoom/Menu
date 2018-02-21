@@ -83,7 +83,11 @@
 
         switch (type) {
             case "debug":
-                console.log(...message);
+                if(Array.isArray(message)){
+                    console.log(...message);
+                }else{
+                    console.log(message);
+                }
                 break;
             case "display":
                 let {view, data} = message;
