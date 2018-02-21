@@ -13,7 +13,7 @@ module.exports = (api) => {
             p.data.initialized = false;
             return [name, p];
         })
-        .reduce((out, [name, p]) => Object.assign(out, {[name]: p}), {})
+        .reduce((out, [name, p]) => Object.assign(out, {[name]: p}), {});
 
     if (functions.hasOwnProperty("_default")) {
         let def = functions["_default"].events;
@@ -23,7 +23,6 @@ module.exports = (api) => {
                 Object.entries(def).forEach(([event, handler]) => {
                     if (events.hasOwnProperty(event)) {
                         let elseCase = events[event].findIndex(([{name}]) => name === "DEFAULT");
-                        console.log(elseCase);
                         if (elseCase === -1) {
                             events[event] = events[event].concat(handler);
                         } else {

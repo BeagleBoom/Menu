@@ -1,4 +1,4 @@
-module.exports = ({Arg0, Else}) => {
+module.exports = ({Arg0, Else},api) => {
     return {
         name: "load_sample",
         captions: {
@@ -14,7 +14,7 @@ module.exports = ({Arg0, Else}) => {
         resume: (name, returnData) => {
         },
         start(name) {
-            this.display("test", {
+            api.display("test", {
                 i: 0
             });
         },

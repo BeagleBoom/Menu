@@ -11,8 +11,15 @@ const socket = require("./lib/socketConnection")(8080);
 
 const StateStack = require("./lib/stateStack");
 const stack = new StateStack({
-    sendEvent: queue.send,
-    display: socket.display
+    sendEvent(...args) {
+        return queue.send(...args);
+    },
+    display(...args) {
+        return socket.display(...args);
+    },
+    sendCaptions(...args) {
+        return socket.sendCaptions(...args);
+    }
 });
 
 const eventHandler = (arg) => stack.processEvent(arg);
