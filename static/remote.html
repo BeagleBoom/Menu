@@ -12,38 +12,80 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
             integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
             crossorigin="anonymous"></script>
-    <script defer src="/fa/fontawesome-all.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" media="all">
 </head>
 <body>
 
 <div class="container">
     <div class="row">
         <div class="col">
-            <button class="btn btn-info btn-block" id="BACK">Back</button>
+            <button class="btn btn-info btn-block" id="BTN_BACK">Back</button>
         </div>
+        <div class="col">
+            <button class="btn btn-info btn-block" id="BTN_A">A</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-info btn-block" id="BTN_B">B</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-info btn-block" id="BTN_C">C</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-info btn-block" id="BTN_D">D</button>
+        </div>
+        <div class="col"></div>
     </div>
     <div class="row mt-5">
         <div class="col">
-            <button class="btn btn-info btn-block" id="A">A</button>
+            <div class="btn-group" role="group">
+                <button type="button" id="Z1_LEFT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <button type="button" id="Z1" class="btn btn-secondary">Z1</button>
+                <button type="button" id="Z1_RIGHT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="screen mx-auto">
+                <div class="top">
+                    <div class="Drow" id="A"> A</div>
+                    <div class="Drow" id="B">B</div>
+                    <div class="Drow" id="C">C</div>
+                    <div class="Drow" id="D">D</div>
+                </div>
+                <div id="content">
+
+                </div>
+                <div class="bottom">
+                    <div class="Drow" id="R1">R1</div>
+                    <div class="Drow" id="R2">R2</div>
+                    <div class="Drow" id="R3">R3</div>
+                    <div class="Drow" id="R4">R4</div>
+                </div>
+            </div>
         </div>
         <div class="col">
-            <button class="btn btn-info btn-block" id="B">B</button>
-        </div>
-        <div class="col">
-            <button class="btn btn-info btn-block" id="C">C</button>
-        </div>
-        <div class="col">
-            <button class="btn btn-info btn-block" id="D">D</button>
+            <div class="btn-group" role="group">
+                <button type="button" id="Z2_LEFT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <button type="button" id="Z2" class="btn btn-secondary">Z2</button>
+                <button type="button" id="Z2_RIGHT" class="btn btn-secondary">
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+            </div>
         </div>
     </div>
     <div class="row mt-5">
+        <div class="col"></div>
         <div class="col">
             <div class="btn-group" role="group">
                 <button type="button" id="R1_LEFT" class="btn btn-secondary">
                     <i class="fa fa-arrow-left"></i>
                 </button>
-                <button type="button" id="R1" class="btn btn-secondary">R1</button>
+                <button type="button" id="BTN_R1" class="btn btn-secondary">R1</button>
                 <button type="button" id="R1_RIGHT" class="btn btn-secondary">
                     <i class="fa fa-arrow-right"></i>
                 </button>
@@ -54,7 +96,7 @@
                 <button type="button" id="R2_LEFT" class="btn btn-secondary">
                     <i class="fa fa-arrow-left"></i>
                 </button>
-                <button type="button" id="R2" class="btn btn-secondary">R2</button>
+                <button type="button" id="BTN_R2" class="btn btn-secondary">R2</button>
                 <button type="button" id="R2_RIGHT" class="btn btn-secondary">
                     <i class="fa fa-arrow-right"></i>
                 </button>
@@ -65,7 +107,7 @@
                 <button type="button" id="R3_LEFT" class="btn btn-secondary">
                     <i class="fa fa-arrow-left"></i>
                 </button>
-                <button type="button" id="R3" class="btn btn-secondary">R3</button>
+                <button type="button" id="BTN_R3" class="btn btn-secondary">R3</button>
                 <button type="button" id="R3_RIGHT" class="btn btn-secondary">
                     <i class="fa fa-arrow-right"></i>
                 </button>
@@ -76,20 +118,72 @@
                 <button type="button" id="R4_LEFT" class="btn btn-secondary">
                     <i class="fa fa-arrow-left"></i>
                 </button>
-                <button type="button" id="R4" class="btn btn-secondary">R4</button>
+                <button type="button" id="BTN_R4" class="btn btn-secondary">R4</button>
                 <button type="button" id="R4_RIGHT" class="btn btn-secondary">
                     <i class="fa fa-arrow-right"></i>
                 </button>
             </div>
         </div>
+        <div class="col"></div>
+
     </div>
 </div>
 <script type="text/javascript">
     $("button").on("click", function (evt) {
         let id = $(this).attr("id");
+        if (id.startsWith("BTN_")) id = id.slice(4);
         fetch("/press/" + id);
     });
 </script>
-</body>
 
+<script src="/handlebars.js"></script>
+<script src="/templates.js"></script>
+<style>
+    .screen {
+        width: 320px;
+        height: 240px;
+        background: black;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        font-family: Monospace;
+        background-image: url(bg.png);
+    }
+
+    .bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    #content {
+        position: absolute;
+        top: 25px;
+        bottom: 25px;
+        left: 0;
+        right: 0;
+        color: #f16f00;
+    }
+
+    .top, .bottom {
+        height: 25px;
+
+    }
+
+    .top > .Drow, .bottom > .Drow {
+        height: 100%;
+        display: table-cell;
+        float: left;
+        width: 25%;
+        text-align: center;
+        line-height: 1.5em;
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+</style>
+<script src="logic.js"></script>
+</body>
 </html>
