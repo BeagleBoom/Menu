@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <script defer src="/fa/fontawesome-all.js"></script>
     <script defer src="/handlebars.js"></script>
+    <script src="/templates.js"></script>
 </head>
 <body>
 
@@ -81,43 +82,33 @@
         var tmp = JSON.parse(event.data);
         var message = tmp.message;
         var type = tmp.type;
-        var views = {};
-        try {
-            document.getElementById("content").innerText = JSON.stringify([
-                Array.hasOwnProperty("isArray"),
-                Promise === undefined,
-                fetch === undefined
-            ]);
-        } catch (e) {
-            document.getElementById("content").innerText = "E: " + e;
-        }
-
-        /*switch (type) {
+        switch (type) {
             case "debug":
                 if (Array.isArray(message)) {
-                    console.log(...message);
+                    console.log.apply(console, message);
                 } else {
                     console.log(message);
                 }
                 break;
             case "display":
-                let {view, data} = message;
-                (() => {
-                    if (views.hasOwnProperty(view)) {
-                        return Promise.resolve(views[view]);
+                var view = message.view;
+                var data = message.data;
+
+
+                if (!views.hasOwnProperty(view)) {
+                    if (templates.hasOwnProperty(view)) {
+                        views[view] = Handlebars.compile(templates[view]);
                     } else {
-                        return fetch("/templates/" + view + ".html")
-                            .then(res => res.text(), () => `<span style="color:red;">VIEW NOT FOUND: ${view}</span>`)
-                            .then((html) => {
-                                views[view] = Handlebars.compile(html);
-                                return views[view];
-                            })
+                        views[view] = Handlebars.compile("<span style=\"color:red;\">VIEW NOT FOUND: " + view + "</span>");
                     }
-                })()
-                    .then((tpl) => document.getElementById("content").innerHTML = tpl(data));
+                }
+                document.getElementById("content").innerHTML = views[view](data);
                 break;
             case "captions":
-                for (let [id, caption] of Object.entries(message)) {
+
+                for (var id in message) {
+                    if (!message.hasOwnProperty(id)) continue;
+                    var caption = message[id];
                     if (caption === false) {
                         caption = "";
                     }
@@ -128,7 +119,7 @@
                     }
                 }
                 break;
-        }*/
+        }
     }
 </script>
 </html>
