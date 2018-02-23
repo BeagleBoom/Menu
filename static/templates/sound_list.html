@@ -1,0 +1,56 @@
+{{count}}
+<style>
+    .list {
+        padding-left: 0;
+    }
+
+    .list > li {
+        padding-left: 1rem;
+        list-style: none;
+        height: 53px;
+        border-bottom: 1px solid #f16f00;
+    }
+
+    .list .name {
+        overflow: hidden;
+        width: 100%;
+        height: 1rem;
+    }
+
+    .list .star, .list .mono, .list .samplerate {
+        float: right;
+        margin-right: 1rem;
+    }
+
+    .list .duration {
+        float: right;
+
+    }
+
+    .list .active {
+        background: rgba(242, 139, 12, 0.5);
+        color: white;
+    }
+
+    .list i.fa {
+        font-size: 0.7em;
+    }
+</style>
+<ul class="list">
+    {{#each results}}
+    <li class="{{#if active}}active{{/if}}">
+        <div class="name">{{name}}</div>
+        <br>
+        <div class="duration">{{duration}}</div>
+        <div class="mono">
+            {{#unless mono}}
+            <i class="fa fa-volume-up fa-flip-horizontal"></i>
+            {{/unless}}
+            <i class="fa fa-volume-up"></i>
+        </div>
+        <div class="samplerate">{{samplerate}}</div>
+
+        <div class="star">{{avg_rating}} <i class="fa fa-star"></i></div>
+    </li>
+    {{/each}}
+</ul>
