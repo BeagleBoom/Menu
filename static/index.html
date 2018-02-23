@@ -78,10 +78,12 @@
 
 <script type="text/javascript">
     var socket = new WebSocket("ws://localhost:8080/");
+    var views = {};
     socket.onmessage = function (event) {
         var tmp = JSON.parse(event.data);
         var message = tmp.message;
         var type = tmp.type;
+
         switch (type) {
             case "debug":
                 if (Array.isArray(message)) {
