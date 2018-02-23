@@ -77,7 +77,7 @@
 </style>
 
 <script type="text/javascript">
-    var socket = new WebSocket("ws://localhost:8080/");
+    var socket = new WebSocket("ws://" + document.location.host);
     var views = {};
     socket.onmessage = function (event) {
         var tmp = JSON.parse(event.data);
