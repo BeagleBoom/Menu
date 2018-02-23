@@ -43,6 +43,7 @@
         margin: 0;
         overflow: hidden;
         font-family: Monospace;
+        background-image: url(bg.png);
     }
 
     .bottom {
@@ -63,7 +64,6 @@
 
     .top, .bottom {
         height: 25px;
-        background: #f16f00;
     }
 
     .top > .row, .bottom > .row {
@@ -80,6 +80,18 @@
 <script type="text/javascript">
     var socket = new WebSocket("ws://" + document.location.host);
     var views = {};
+
+    var colors = {
+        A: ["F28B0C", "3B568C"],
+        B: ["3B568C", "F28B0C"],
+        C: ["69BF76", "3B568C"],
+        D: ["F23A29", "3B568C"],
+    };
+    colors.R1 = colors.A;
+    colors.R2 = colors.B;
+    colors.R3 = colors.C;
+    colors.R4 = colors.D;
+
     socket.onmessage = function (event) {
         var tmp = JSON.parse(event.data);
         var message = tmp.message;
@@ -112,14 +124,26 @@
                 for (var id in message) {
                     if (!message.hasOwnProperty(id)) continue;
                     var caption = message[id];
+                    var color = colors[id];
                     if (caption === false) {
                         caption = "";
+                        color = null;
                     }
+                    var byId = document.getElementById(id);
                     if (caption[0] === ":") {
-                        document.getElementById(id).innerHTML = "<i class='fa fa-" + caption.substr(1) + "'></i>";
+                        byId.innerHTML = "<i class='fa fa-" + caption.substr(1) + "'></i>";
                     } else {
-                        document.getElementById(id).textContent = caption;
+                        byId.textContent = caption;
                     }
+                    console.log(id, color);
+                    if (color == null) {
+                        byId.style["background-color"] = "";
+                        byId.style.color = "";
+                    } else {
+                        byId.style["background-color"] = "#" + color[0];
+                        byId.style.color = "#" + color[1];
+                    }
+
                 }
                 break;
         }
