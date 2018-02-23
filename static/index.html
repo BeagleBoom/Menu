@@ -84,12 +84,19 @@
     var socket = new WebSocket("ws://" + document.location.host);
     var views = {};
 
-    var colors = {
-        A: ["F28B0C", "3B568C"],
-        B: ["3B568C", "F28B0C"],
-        C: ["69BF76", "3B568C"],
-        D: ["F23A29", "3B568C"],
-    };
+    var colors = {};
+
+    if (navigator.vendor === "Google Inc.") {
+        colors.A = ["#F28B0C", "#3B568C"];
+        colors.B = ["#3B568C", "#F28B0C"];
+        colors.C = ["#69BF76", "#3B568C"];
+        colors.D = ["#F23A29", "#3B568C"];
+    } else {
+        colors.A = ["#F28B0C", "black"];
+        colors.B = ["#3B568C", "black"];
+        colors.C = ["#69BF76", "black"];
+        colors.D = ["#F23A29", "black"];
+    }
 
     var change = -8;
 
@@ -132,10 +139,10 @@
         return 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
     }
 
-    for (var key in colors) {
+    /*for (var key in colors) {
         if (!colors.hasOwnProperty(key)) continue;
         colors[key] = colors[key].map(toHSL);
-    }
+    }*/
 
     colors.R1 = colors.A;
     colors.R2 = colors.B;
