@@ -15,13 +15,22 @@ function $test() {
 
             var zoomSegment = Math.ceil(sound.length / zoom);
 
-            bar.style.width = width / zoom + "px";
-            bar.style.left = width / zoom * position + "px";
+            var stepSize = Math.floor(zoomSegment * 0.1);
 
-            var bucketSize = Math.ceil(zoomSegment / width);
+            var bucketSize = Math.floor(zoomSegment / width);
+
+            var stretch = zoomSegment < width ? width / zoomSegment : 1;
+
+            if (position * stepSize + zoomSegment > sound.length) {
+                position = Math.floor((sound.length - zoomSegment) / stepSize);
+            }
+
+            bar.style.width = width / zoom + "px";
+            bar.style.left = width * (position * stepSize / sound.length) + "px";
+
             ctx.clearRect(0, 0, width, height);
             var drawData = sound
-                .slice(position * zoomSegment, (position + 1) * zoomSegment)
+                .slice(position * stepSize, position * stepSize + zoomSegment)
                 .reduce(function (out, element) {
                     if (out[out.length - 1].length >= bucketSize) {
                         out.push([]);
@@ -38,7 +47,10 @@ function $test() {
                     return Math.round(s * height / 2);
                 })
                 .map(function (p, i) {
-                    return [i, (p + height / 2)];
+                    return [
+                        i * stretch,
+                        (p + height / 2)
+                    ];
                 });
 
             ctx.beginPath();
@@ -84,10 +96,8 @@ function $test() {
                         }
                         break;
                     case "zoom_right":
-                        if (position < zoom - 1) {
-                            position++;
-                            draw();
-                        }
+                        position++;
+                        draw();
                         break;
                 }
             }
