@@ -26,6 +26,9 @@ const stack = new StateStack({
     },
     sendCaptions(...args) {
         return socket.sendCaptions(...args);
+    },
+    sendView(...args) {
+        return socket.send(...args);
     }
 });
 

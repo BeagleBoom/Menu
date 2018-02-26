@@ -66,10 +66,22 @@ colors.R2 = colors.B;
 colors.R3 = colors.C;
 colors.R4 = colors.D;
 
+var currentController = null;
+
 socket.onmessage = function (event) {
     var tmp = JSON.parse(event.data);
     var message = tmp.message;
+
     var type = tmp.type;
+
+    function call(name) {
+        if (currentController == null || !currentController.hasOwnProperty(name)) {
+            return function () {
+            };
+        } else {
+            return currentController[name];
+        }
+    }
 
     switch (type) {
         case "debug":
@@ -80,9 +92,15 @@ socket.onmessage = function (event) {
             }
             break;
         case "display":
+
+            call("stop")();
+
             var view = message.view;
             var data = message.data;
 
+            if (controllers.hasOwnProperty(view)) {
+                currentController = controllers[view]();
+            }
 
             if (!views.hasOwnProperty(view)) {
                 if (templates.hasOwnProperty(view)) {
@@ -91,7 +109,10 @@ socket.onmessage = function (event) {
                     views[view] = Handlebars.compile("<span style=\"color:red;\">VIEW NOT FOUND: " + view + "</span>");
                 }
             }
+
             document.getElementById("content").innerHTML = views[view](data);
+
+            call("start")(data);
             break;
         case "captions":
 
@@ -120,5 +141,8 @@ socket.onmessage = function (event) {
 
             }
             break;
+        default:
+            call("onEvent")(type, message);
+            break;
     }
-}
+};
