@@ -62,7 +62,7 @@ function $test() {
                 sound = data.sound;
                 draw();
             },
-            onEvent(event, data) {
+            onEvent: function (event, data) {
                 switch (event) {
                     case "zoom_in":
                         if (zoom < 16) {
