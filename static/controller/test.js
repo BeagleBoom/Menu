@@ -44,11 +44,11 @@ function $test() {
             ctx.beginPath();
             ctx.strokeStyle = "#F28B0C";
 
-            drawData.forEach((arg, i) => {
+            drawData.forEach(function (arg, i) {
                 if (i === 0) {
-                    ctx.moveTo(...arg)
+                    ctx.moveTo(arg[0], arg[1])
                 } else {
-                    ctx.lineTo(...arg)
+                    ctx.lineTo(arg[0], arg[1])
                 }
             });
             ctx.stroke();
