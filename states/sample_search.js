@@ -3,7 +3,7 @@ let querystring = require("querystring");
 
 const search = (text, startPage = 1) => {
 
-    let oAuth = {token: {access_token: "sEzGLDzLDtuzUW8itzDPPYek0NjYmD", "token_type": "Bearer"}};
+    let oAuth = {token: {access_token: "osrQx0SEyUyFDgNLvTNZFNGTPnFcGD", "token_type": "Bearer"}};
 
     // Fields and Filters
     let fields = 'id,name,url,tags,description,duration,avg_rating,license,type,channels,filesize,bitrate,samplerate,username,pack,num_downloads,avg_ratings,num_ratings';
