@@ -1,4 +1,3 @@
-{{count}}
 <style>
     .list {
         padding-left: 0;
@@ -35,11 +34,45 @@
     .list i.fa {
         font-size: 0.7em;
     }
+
+    span.count {
+        position: absolute;
+    }
+
+    #loading.show {
+        width: 100%;
+        height: 100%;
+        background: black;
+        display: block;
+        position: absolute;
+        top: 0;
+        padding: 1rem;
+        margin: 0 auto;
+        text-align: center;
+        padding-top: 83px;
+    }
+
+    #loading.show i {
+        animation: 1s rotateRight infinite linear;
+    }
+
+    #loading {
+        display: none;
+    }
+
+    @keyframes rotateRight {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>
+
+<span class="count">{{count}}</span>
+
 <ul class="list">
     {{#each results}}
-    <li class="{{#if active}}active{{/if}}">
-        <div class="name">{{name}}</div>
+    <li class="{{#if active}}active{{/if}}" id="{{id}}">
+        <div class="name">{{inc @index}} {{name}}</div>
         <br>
         <div class="duration">{{duration}}</div>
         <div class="mono">
@@ -53,3 +86,7 @@
     </li>
     {{/each}}
 </ul>
+
+<div id="loading">
+    <i class="fa fa-spinner"></i> Loading data. Please wait.
+</div>

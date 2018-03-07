@@ -1,9 +1,10 @@
 let request = require('then-request');
 let querystring = require("querystring");
+let {URL, URLSearchParams} = require("url");
 
 const search = (text, startPage = 1) => {
 
-    let oAuth = {token: {access_token: "osrQx0SEyUyFDgNLvTNZFNGTPnFcGD", "token_type": "Bearer"}};
+    let oAuth = {token: {access_token: "zrFL5jPlJGcquE0Zvb99BqYdlPjvN9", "token_type": "Bearer"}};
 
     // Fields and Filters
     let fields = 'id,name,url,tags,description,duration,avg_rating,license,type,channels,filesize,bitrate,samplerate,username,pack,num_downloads,avg_ratings,num_ratings';
@@ -36,8 +37,9 @@ const search = (text, startPage = 1) => {
                 return r;
             });
             return result;
-        })
-        ;
+        }).catch((...args) => {
+            console.error(...args);
+        });
 };
 
 
@@ -46,27 +48,36 @@ module.exports = ({Arg0, Else}, api) => {
         name: "sample_search",
         title: "Search Sample",
         data: {
-            searchTerm: ""
+            searchTerm: "",
+            results: [],
+        },
+        captions: {
+            "C": "Previous",
+            "D": "Next"
         },
         resume: (name, returnData, data) => {
             if (name === "_keyboard") {
                 if (returnData === null) {
                     return api.popState();
                 }
+                api.sendView("loading", true);
                 search(returnData).then(result => {
-                    console.log(result);
-                    result.results[1].active = true;
+                    data.searchTerm = returnData;
+                    data.results = result;
                     api.display("sound_list", result);
+                    api.sendView("loading", false);
                 });
             }
-        }, start: (name) => {
-            api.pushState("_keyboard");
+        }, start: (data) => {
+            api.pushState("_keyboard", {text: data.searchTerm});
         },
         events: {
             "FREESOUND_SEARCHRESULTS": [
                 [Else, [
                     (api, data, event) => {
                         console.log("Got freesound results: ", data);
+                        data.results[data.index].active = true;
+                        data.results = data;
                         api.pushState("list_results", {
                                 origin: "freesound",
                                 results: data,
@@ -75,6 +86,50 @@ module.exports = ({Arg0, Else}, api) => {
                         );
                     }
                 ]],
+            ],
+            "ROTARY_RIGHT": [
+                [Arg0("Z2"), [
+                    (api, data, event) => {
+                        api.sendView("scrollDown", null);
+                    }
+                ]]
+            ],
+            "ROTARY_LEFT": [
+                [Arg0("Z2"), [
+                    (api, data, event) => {
+                        api.sendView("scrollUp", null);
+                    }
+                ]]
+            ],
+            "BUTTON_UP": [
+                [Arg0("C"), [
+                    (api, data, event) => {
+                        if (data.results.previous !== null) {
+                            let loadUrl = new URL(data.results.previous);
+                            let searchParams = new URLSearchParams(loadUrl.searchParams);
+                            api.sendView("loading", true);
+                            search(data.searchTerm, searchParams.get("page")).then(result => {
+                                data.results = result;
+                                api.display("sound_list", result);
+                                api.sendView("loading", false);
+                            });
+                        }
+                    }
+                ]],
+                [Arg0("D"), [
+                    (api, data, event) => {
+                        if (data.results.next !== null) {
+                            let loadUrl = new URL(data.results.next);
+                            let searchParams = new URLSearchParams(loadUrl.searchParams);
+                            api.sendView("loading", true);
+                            search(data.searchTerm, searchParams.get("page")).then(result => {
+                                data.results = result;
+                                api.display("sound_list", result);
+                                api.sendView("loading", false);
+                            });
+                        }
+                    }
+                ]]
             ]
         }
     };
