@@ -1,0 +1,108 @@
+<style>
+    #keyboard td.active {
+        color: black;
+        background-color: #f28b0c;
+    }
+
+    #keyboard td {
+        width: 30px;
+        text-align: center;
+        height: 30px;
+    }
+
+    #keyboard {
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+    #textbox {
+        margin: 0 10px;
+        padding: 10px;
+        border: 1px solid;
+    }
+
+    blink, .blink {
+        -webkit-animation: blink 1s step-end infinite;
+        -moz-animation: blink 1s step-end infinite;
+        -o-animation: blink 1s step-end infinite;
+        animation: blink 1s step-end infinite;
+    }
+
+    @-webkit-keyframes blink {
+        67% {
+            opacity: 0
+        }
+    }
+
+    @-moz-keyframes blink {
+        67% {
+            opacity: 0
+        }
+    }
+
+    @-o-keyframes blink {
+        67% {
+            opacity: 0
+        }
+    }
+
+    @keyframes blink {
+        67% {
+            opacity: 0
+        }
+    }
+</style>
+<table id="keyboard">
+    <tr>
+        <td id="char_1">1</td>
+        <td id="char_2">2</td>
+        <td id="char_3">3</td>
+        <td id="char_4">4</td>
+        <td id="char_5">5</td>
+        <td id="char_6">6</td>
+        <td id="char_7">7</td>
+        <td id="char_8">8</td>
+        <td id="char_9">9</td>
+        <td id="char_0">0</td>
+    </tr>
+    <tr>
+        <td id="char_q">q</td>
+        <td id="char_w">w</td>
+        <td id="char_e">e</td>
+        <td id="char_r">r</td>
+        <td id="char_t">t</td>
+        <td id="char_y">y</td>
+        <td id="char_u">u</td>
+        <td id="char_i">i</td>
+        <td id="char_o">o</td>
+        <td id="char_p">p</td>
+    </tr>
+    <tr>
+        <td id="char_a">a</td>
+        <td id="char_s">s</td>
+        <td id="char_d">d</td>
+        <td id="char_f">f</td>
+        <td id="char_g">g</td>
+        <td id="char_h">h</td>
+        <td id="char_j">j</td>
+        <td id="char_k">k</td>
+        <td id="char_l">l</td>
+        <td id="char_space">␣</td>
+    </tr>
+    <tr>
+        <td id="char_z">z</td>
+        <td id="char_x">x</td>
+        <td id="char_c">c</td>
+        <td id="char_v">v</td>
+        <td id="char_b">b</td>
+        <td id="char_n">n</td>
+        <td id="char_m">m</td>
+        <td id="char_-">-</td>
+        <td id="char__">_</td>
+        <td id="char_+">+</td>
+    </tr>
+</table>
+<div id="textbox">
+    <span id="text"></span>
+    <span style="margin-left: -0.5em;" class="blink">_</span>
+</div>

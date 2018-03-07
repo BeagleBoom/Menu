@@ -48,20 +48,19 @@ module.exports = ({Arg0, Else}, api) => {
         data: {
             searchTerm: ""
         },
-        resume: (name, returnData) => {
+        resume: (name, returnData, data) => {
             if (name === "_keyboard") {
-                data.searchTerm = returnData.string;
-                console.log("Entered String", data.searchTerm);
-                api.send("FREESOUND_SEARCH", data.searchTerm);
-                api.send("WAITING", "Waiting for search results.");
+                if (returnData === null) {
+                    return api.popState();
+                }
+                search(returnData).then(result => {
+                    console.log(result);
+                    result.results[1].active = true;
+                    api.display("sound_list", result);
+                });
             }
         }, start: (name) => {
-            search("storm").then(result => {
-                console.log(result);
-                result.results[1].active = true;
-                api.display("sound_list", result);
-            })
-
+            api.pushState("_keyboard");
         },
         events: {
             "FREESOUND_SEARCHRESULTS": [

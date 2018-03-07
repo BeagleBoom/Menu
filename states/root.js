@@ -10,13 +10,15 @@ module.exports = ({Arg0, Else}) => {
         },
 
         data: {
-            // initial variables
+            a: 1
         },
-        resume: (name, returnData) => {
+        resume: (name, returnData, data) => {
             console.log("Resume root from:", name, returnData);
+            console.log("a", data);
         },
-        start: (name) => {
-            console.log("Start:", name);
+        start: (data) => {
+            console.log("Start:", data);
+            data.a++;
         },
 
         events: {
