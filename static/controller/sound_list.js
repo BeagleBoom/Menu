@@ -2,7 +2,7 @@ function $sound_list() {
     return function () {
         var results = [];
         var index = 0;
-
+        var snd = null;
         function setIndex(newIndex) {
             var currentId = results.results[0].id;
             if (document.getElementsByClassName("active").length > 0) {
@@ -38,7 +38,6 @@ function $sound_list() {
         }
 
         function checkCaptions() {
-            console.log(results.next, results.previous, results.previous === null);
             if (results.next === null) {
                 document.getElementById("D").style.visibility = 'hidden';
             } else {
@@ -56,13 +55,11 @@ function $sound_list() {
             start: function (data) {
                 results = data;
                 setIndex(0);
-                console.log(data);
                 checkCaptions();
             },
             onEvent: function (event, data) {
                 switch (event) {
                     case "scrollUp":
-                        var scrollIndex = index - 1;
                         if (index === 0) {
                             index = results.results.length;
                             scrollTo(results.results.length - 3);
@@ -87,13 +84,20 @@ function $sound_list() {
                         break;
 
                     case "loading":
-                        console.log(event, data);
                         var elem = document.getElementById("loading");
                         if (data) {
                             elem.classList.add("show");
                         } else {
                             elem.classList.remove("show");
                         }
+                        break;
+
+                    case "play":
+                        if (snd !== null) {
+                            snd.pause();
+                        }
+                        snd = new Audio(results.results[index].preview); // buffers automatically when created
+                        snd.play();
                         break;
                 }
             }

@@ -7,7 +7,7 @@ const search = (text, startPage = 1) => {
     let oAuth = {token: {access_token: "zrFL5jPlJGcquE0Zvb99BqYdlPjvN9", "token_type": "Bearer"}};
 
     // Fields and Filters
-    let fields = 'id,name,url,tags,description,duration,avg_rating,license,type,channels,filesize,bitrate,samplerate,username,pack,num_downloads,avg_ratings,num_ratings';
+    let fields = 'previews,id,name,url,tags,description,duration,avg_rating,license,type,channels,filesize,bitrate,samplerate,username,pack,num_downloads,avg_ratings,num_ratings';
 
     // Request Parameters
     let headers = {Authorization: oAuth.token.token_type + " " + oAuth.token.access_token};
@@ -34,6 +34,7 @@ const search = (text, startPage = 1) => {
                 ]
                     .map(d => d < 10 ? "0" + d : "" + d)
                     .join(":");
+                r.preview = r.previews['preview-hq-mp3'];
                 return r;
             });
             return result;
@@ -128,6 +129,11 @@ module.exports = ({Arg0, Else}, api) => {
                                 api.sendView("loading", false);
                             });
                         }
+                    }
+                ]],
+                [Arg0("Z2"), [
+                    (api, data, event) => {
+                        api.sendView("play", null);
                     }
                 ]]
             ]
