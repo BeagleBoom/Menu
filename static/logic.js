@@ -3,6 +3,8 @@ var views = {};
 
 var colors = {};
 
+var partials = {};
+
 if (navigator.vendor === "Google Inc.") {
     colors.A = ["#F28B0C", "#3B568C"];
     colors.B = ["#3B568C", "#F28B0C"];
@@ -55,11 +57,6 @@ function toHSL(hex) {
     h += change;
     return 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
 }
-
-/*for (var key in colors) {
-    if (!colors.hasOwnProperty(key)) continue;
-    colors[key] = colors[key].map(toHSL);
-}*/
 
 colors.R1 = colors.A;
 colors.R2 = colors.B;
@@ -130,7 +127,6 @@ socket.onmessage = function (event) {
                 } else {
                     byId.textContent = caption;
                 }
-                console.log(id, color);
                 if (color == null) {
                     byId.style["background-color"] = "";
                     byId.style.color = "";
@@ -150,3 +146,39 @@ socket.onmessage = function (event) {
 Handlebars.registerHelper("inc", function (value, options) {
     return parseInt(value) + 1;
 });
+
+Handlebars.registerHelper('json', function (context) {
+    console.log("JSON:", context);
+    return JSON.stringify(context);
+});
+
+Handlebars.registerHelper('include', function (path, options) {
+    console.log(this, path, options);
+});
+
+Handlebars.registerHelper('limit', function (arr, limit) {
+    return arr.slice(0, limit);
+});
+
+function loadPartial(name) {
+    if (!partials.hasOwnProperty(name)) {
+        console.log("Loading partial: " + name);
+        var x = new XMLHttpRequest();
+        x.open('GET', '/partials/' + name + '.hbs', false);
+        x.onreadystatechange = function () {
+            if (x.readyState === 4) {
+                switch (x.status) {
+                    case 200:
+                        partials[name] = x.responseText.trim();
+                        break;
+
+                    default:
+                        partials[name] = "<span style=\"color:red;\">PARTIAL NOT FOUND: /partials/" + name + ".hbs</span>";
+                        break;
+                }
+            }
+        }
+        x.send();
+    }
+    return partials[name];
+}

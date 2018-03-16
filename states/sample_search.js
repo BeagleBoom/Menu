@@ -4,7 +4,7 @@ let {URL, URLSearchParams} = require("url");
 
 const search = (text, startPage = 1) => {
 
-    let oAuth = {token: {access_token: "zrFL5jPlJGcquE0Zvb99BqYdlPjvN9", "token_type": "Bearer"}};
+    let oAuth = {token: {access_token: "qPcGhh8ZRFYE20Y6VhkZ158aCRdoIC", "token_type": "Bearer"}};
 
     // Fields and Filters
     let fields = 'previews,id,name,url,tags,description,duration,avg_rating,license,type,channels,filesize,bitrate,samplerate,username,pack,num_downloads,avg_ratings,num_ratings';
@@ -51,6 +51,9 @@ module.exports = ({Arg0, Else}, api) => {
         data: {
             searchTerm: "",
             results: [],
+            currentId: 0,
+            currentItem: null,
+            index: 0
         },
         captions: {
             "C": "Previous",
@@ -65,6 +68,7 @@ module.exports = ({Arg0, Else}, api) => {
                 search(returnData).then(result => {
                     data.searchTerm = returnData;
                     data.results = result;
+                    data.currentItem = result.results[0];
                     api.display("sound_list", result);
                     api.sendView("loading", false);
                 });
@@ -76,9 +80,9 @@ module.exports = ({Arg0, Else}, api) => {
             "FREESOUND_SEARCHRESULTS": [
                 [Else, [
                     (api, data, event) => {
-                        console.log("Got freesound results: ", data);
                         data.results[data.index].active = true;
                         data.results = data;
+                        data.currentItem = data[0];
                         api.pushState("list_results", {
                                 origin: "freesound",
                                 results: data,
@@ -91,14 +95,25 @@ module.exports = ({Arg0, Else}, api) => {
             "ROTARY_RIGHT": [
                 [Arg0("Z2"), [
                     (api, data, event) => {
-                        api.sendView("scrollDown", null);
+                        data.index++;
+                        if (data.index > data.results.results.length - 1) {
+                            data.index = 0;
+                        }
+                        data.currentItem = data.results.results[data.index];
+                        api.sendView("scrollDown", data);
                     }
                 ]]
             ],
             "ROTARY_LEFT": [
                 [Arg0("Z2"), [
                     (api, data, event) => {
-                        api.sendView("scrollUp", null);
+                        data.index--;
+                        if (data.index === -1) {
+                            data.index = data.results.results.length;
+                        }
+
+                        data.currentItem = data.results.results[data.index];
+                        api.sendView("scrollUp", data);
                     }
                 ]]
             ],
@@ -111,6 +126,7 @@ module.exports = ({Arg0, Else}, api) => {
                             api.sendView("loading", true);
                             search(data.searchTerm, searchParams.get("page")).then(result => {
                                 data.results = result;
+                                data.currentItem = data[0];
                                 api.display("sound_list", result);
                                 api.sendView("loading", false);
                             });
@@ -126,6 +142,7 @@ module.exports = ({Arg0, Else}, api) => {
                             search(data.searchTerm, searchParams.get("page")).then(result => {
                                 data.results = result;
                                 api.display("sound_list", result);
+                                data.currentItem = data[0];
                                 api.sendView("loading", false);
                             });
                         }
@@ -133,7 +150,12 @@ module.exports = ({Arg0, Else}, api) => {
                 ]],
                 [Arg0("Z2"), [
                     (api, data, event) => {
-                        api.sendView("play", null);
+                        if (data.currentItem === null) {
+                            data.currentItem = data.results.results[0];
+                        }
+                        api.sendView("currentItem", data.currentItem);
+
+                        api.sendView("info", data);
                     }
                 ]]
             ]

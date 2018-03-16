@@ -6,7 +6,7 @@
     .list > li {
         padding-left: 1rem;
         list-style: none;
-        height: 53px;
+        height: 55px;
         border-bottom: 1px solid #f16f00;
     }
 
@@ -65,6 +65,25 @@
             transform: rotate(360deg);
         }
     }
+
+    #info {
+        position: absolute;
+        background: black;
+        width: 95%;
+        height: 93%;
+        display: none;
+        top: 5px;
+        right: 8px;
+        border: 1px solid #f16f00;
+    }
+
+    #info.show {
+        display: block;
+    }
+
+    #info-template {
+        display: none
+    }
 </style>
 
 <span class="count">{{count}}</span>
@@ -87,6 +106,12 @@
     {{/each}}
 </ul>
 
+<div id="info">
+
+</div>
+
+
 <div id="loading">
     <i class="fa fa-spinner"></i> Loading data. Please wait.
 </div>
+

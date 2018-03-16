@@ -1,0 +1,79 @@
+<!-- <img src=x onerror="alert(1)" style="display:none"> -->
+<style>
+    #info {
+        font-size: 0.7rem;
+    }
+
+    .detail_desc {
+        height: 50px;
+        overflow: hidden;
+        border: 1px dashed #f16f00;
+        margin: 0.5rem 0 0.5rem 0;
+        padding: 0 0.5rem 0 0.5rem;
+        clear: both;
+    }
+
+    .marquee {
+        top: 6em;
+        position: relative;
+        box-sizing: border-box;
+        animation: marquee 15s linear infinite;
+    }
+
+    /* Make it move! */
+    @keyframes marquee {
+        0% {
+            top: 0em
+        }
+        100% {
+            top: -11em
+        }
+    }
+
+    ul.tags {
+        list-style: none;
+        padding-left: 0;
+        font-size: 0.6rem;
+    }
+
+    ul.tags li {
+        float: left;
+        padding: 0.1rem;
+        border: 1px solid;
+        margin: 0.1rem;
+        border-radius: 4px;
+    }
+
+    ul.tags:after {
+        clear: both;
+    }
+
+    span.label {
+        clear: both;
+        display: block;
+    }
+
+    div.license img {
+        height: 1rem;
+    }
+
+    div.license {
+        display: inline-block;
+        float: right;
+        border: 1px dotted #f16f00;
+        margin: 0.1rem;
+        padding: 0.2rem;
+    }
+</style>
+
+Name: {{name}}
+<span class="label">Type: {{type}}</span>
+<div class="license">License: {{{fetch_license license}}}</div>
+<div class="detail_desc">
+    <p class="marquee">{{{description}}}</p>
+</div>
+<ul class="tags">
+    {{#each (limit tags 5)}}
+    <li>{{this}}</li>
+    {{/each}}
+</ul>

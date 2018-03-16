@@ -1,10 +1,38 @@
 function $sound_list() {
     return function () {
-        var results = [];
+        Handlebars.registerHelper('fetch_license', function (license) {
+            license = license.trim();
+            var ret = "";
+            switch (license) {
+                case "http://creativecommons.org/licenses/by/3.0/":
+                    ret = "<img src='/css/icons/cc_icon_white_x2.png'> <img src='/css/icons/attribution_icon_white_x2.png'>";
+                    break;
+                case "http://creativecommons.org/publicdomain/zero/1.0/":
+                    ret = "<img src='/css/icons/nolaw.png'>";
+                    break;
+                default:
+                    ret = license;
+                    console.log(ret);
+            }
+            return ret;
+        });
+
+        var results = {};
         var index = 0;
         var snd = null;
+        var currentId = null;
+
+        function showInfo(data) {
+            document.getElementById("info").classList.add("show");
+        }
+
+        function hideInfo(event) {
+            if (event === "play") return;
+            document.getElementById("info").classList.remove("show");
+        }
+
         function setIndex(newIndex) {
-            var currentId = results.results[0].id;
+            currentId = results.results[0].id;
             if (document.getElementsByClassName("active").length > 0) {
                 currentId = document.getElementsByClassName("active")[0].id;
             }
@@ -51,13 +79,19 @@ function $sound_list() {
             }
         }
 
+        function fetchTemplate(template) {
+            return loadPartial(template);
+        }
+
         return {
             start: function (data) {
                 results = data;
+                results.currentItem = data.results[0];
                 setIndex(0);
                 checkCaptions();
             },
             onEvent: function (event, data) {
+                hideInfo(event);
                 switch (event) {
                     case "scrollUp":
                         if (index === 0) {
@@ -78,6 +112,7 @@ function $sound_list() {
                     case "loadNext":
                     case "loadPrev":
                         results = data;
+
                         setIndex(0);
                         scrollTo(0);
                         checkCaptions();
@@ -99,6 +134,21 @@ function $sound_list() {
                         snd = new Audio(results.results[index].preview); // buffers automatically when created
                         snd.play();
                         break;
+                    case "info":
+                        showInfo(data);
+                        break;
+                    case "currentItem":
+                        console.log("currentItem:", data);
+                        var template = Handlebars.compile(fetchTemplate("info"));
+                        var html = template(data);
+                        var elem = document.getElementById("info");
+                        elem.innerHTML = "";
+                        var d = document.createElement('div');
+                        d.innerHTML = html;
+                        elem.append(d);
+                        break;
+                    default:
+                        console.log("Unkown event: ", event, data);
                 }
             }
         }

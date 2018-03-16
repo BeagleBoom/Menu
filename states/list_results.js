@@ -45,12 +45,12 @@ module.exports = ({Arg0, Else}, api) => {
                 ]],
                 [Arg0("STOP"), [
                     (api, data, event) => {
-                        console.log("Stopping playback");
                         api.send("STOP_PLAYBACK");
                     }
                 ]],
-                [Arg0("R4"), [
+                [Arg0("Z2"), [
                     (api, data, event) => {
+                        console.log("Z2", this.data);
                         if (this.data.origin === "freesound") {
                             api.send("FREESOUND_DOWNLOAD", this.data.selectedItem);
                         }
