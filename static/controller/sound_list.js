@@ -10,6 +10,10 @@ function $sound_list() {
                 case "http://creativecommons.org/publicdomain/zero/1.0/":
                     ret = "<img src='/css/icons/nolaw.png'>";
                     break;
+
+                case "http://creativecommons.org/licenses/by-nc/3.0/":
+                    ret = "<img src='/css/icons/cc_icon_white_x2.png'> <img src='/css/icons/attribution_icon_white_x2.png'> <img src='/css/icons/nc_white_x2.png'>";
+                    break;
                 default:
                     ret = license;
                     console.log(ret);
@@ -112,7 +116,6 @@ function $sound_list() {
                     case "loadNext":
                     case "loadPrev":
                         results = data;
-
                         setIndex(0);
                         scrollTo(0);
                         checkCaptions();
@@ -134,11 +137,19 @@ function $sound_list() {
                         snd = new Audio(results.results[index].preview); // buffers automatically when created
                         snd.play();
                         break;
+                    case "stop":
+                        if (snd !== null) {
+                            snd.pause();
+                        }
+                        break;
                     case "info":
                         showInfo(data);
                         break;
+                    case "index":
+                        setIndex(data);
+                        scrollTo(data);
+                        break;
                     case "currentItem":
-                        console.log("currentItem:", data);
                         var template = Handlebars.compile(fetchTemplate("info"));
                         var html = template(data);
                         var elem = document.getElementById("info");

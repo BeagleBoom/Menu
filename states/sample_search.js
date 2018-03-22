@@ -2,12 +2,16 @@ let request = require('then-request');
 let querystring = require("querystring");
 let {URL, URLSearchParams} = require("url");
 
-const search = (text, startPage = 1) => {
-
-    let oAuth = {token: {access_token: "qPcGhh8ZRFYE20Y6VhkZ158aCRdoIC", "token_type": "Bearer"}};
+const search = (text, freesound, startPage = 1) => {
+    let oAuth = {
+        token: {
+            access_token: freesound.token,
+            token_type: "Bearer"
+        }
+    };
 
     // Fields and Filters
-    let fields = 'previews,id,name,url,tags,description,duration,avg_rating,license,type,channels,filesize,bitrate,samplerate,username,pack,num_downloads,avg_ratings,num_ratings';
+    let fields = 'previews,id,name,url,tags,description,duration,avg_rating,license,type,channels,filesize,bitrate,samplerate,username,pack,num_downloads,avg_ratings,num_ratings,';
 
     // Request Parameters
     let headers = {Authorization: oAuth.token.token_type + " " + oAuth.token.access_token};
@@ -56,8 +60,9 @@ module.exports = ({Arg0, Else}, api) => {
             index: 0
         },
         captions: {
-            "C": "Previous",
-            "D": "Next"
+            "A": "Load",
+            "C": "<< Page",
+            "D": "Page >>"
         },
         resume: (name, returnData, data) => {
             if (name === "_keyboard") {
@@ -65,13 +70,19 @@ module.exports = ({Arg0, Else}, api) => {
                     return api.popState();
                 }
                 api.sendView("loading", true);
-                search(returnData).then(result => {
+                search(returnData, data.settings.freesound).then(result => {
                     data.searchTerm = returnData;
                     data.results = result;
                     data.currentItem = result.results[0];
                     api.display("sound_list", result);
                     api.sendView("loading", false);
                 });
+            }
+
+            if (name === "load_sample") {
+                api.display("sound_list", data.results);
+                api.sendView("currentItem", data.currentItem);
+                api.sendView("index", data.index);
             }
         }, start: (data) => {
             api.pushState("_keyboard", {text: data.searchTerm});
@@ -96,11 +107,13 @@ module.exports = ({Arg0, Else}, api) => {
                 [Arg0("Z2"), [
                     (api, data, event) => {
                         data.index++;
+
                         if (data.index > data.results.results.length - 1) {
                             data.index = 0;
                         }
                         data.currentItem = data.results.results[data.index];
                         api.sendView("scrollDown", data);
+
                     }
                 ]]
             ],
@@ -109,7 +122,7 @@ module.exports = ({Arg0, Else}, api) => {
                     (api, data, event) => {
                         data.index--;
                         if (data.index === -1) {
-                            data.index = data.results.results.length;
+                            data.index = data.results.results.length - 1;
                         }
 
                         data.currentItem = data.results.results[data.index];
@@ -118,13 +131,18 @@ module.exports = ({Arg0, Else}, api) => {
                 ]]
             ],
             "BUTTON_UP": [
+                [Arg0("A"), [
+                    (api, data, event) => {
+                        api.pushState("load_sample", {item: data.currentItem, settings: data.settings, old_data: data});
+                    }
+                ]],
                 [Arg0("C"), [
                     (api, data, event) => {
                         if (data.results.previous !== null) {
                             let loadUrl = new URL(data.results.previous);
                             let searchParams = new URLSearchParams(loadUrl.searchParams);
                             api.sendView("loading", true);
-                            search(data.searchTerm, searchParams.get("page")).then(result => {
+                            search(data.searchTerm, data.settings.freesound, searchParams.get("page")).then(result => {
                                 data.results = result;
                                 data.currentItem = data[0];
                                 api.display("sound_list", result);
@@ -139,7 +157,7 @@ module.exports = ({Arg0, Else}, api) => {
                             let loadUrl = new URL(data.results.next);
                             let searchParams = new URLSearchParams(loadUrl.searchParams);
                             api.sendView("loading", true);
-                            search(data.searchTerm, searchParams.get("page")).then(result => {
+                            search(data.searchTerm, data.settings.freesound, searchParams.get("page")).then(result => {
                                 data.results = result;
                                 api.display("sound_list", result);
                                 data.currentItem = data[0];
@@ -157,7 +175,18 @@ module.exports = ({Arg0, Else}, api) => {
 
                         api.sendView("info", data);
                     }
+                ]],
+                [Arg0("PLAY"), [
+                    (api, data, event) => {
+                        api.sendView("play", data.currentItem);
+                    }
+                ]],
+                [Arg0("STOP"), [
+                    (api, data, event) => {
+                        api.sendView("stop");
+                    }
                 ]]
+
             ]
         }
     };

@@ -14,7 +14,6 @@ function $keyboard() {
             onEvent: function (event, data) {
                 switch (event) {
                     case "displayChar":
-                        console.log(data);
                         selectChar(data);
                         break;
                     case "text":
