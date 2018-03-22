@@ -65,8 +65,9 @@ module.exports = ({Arg0, Else}, api) => {
 
 
     function sendADSR(adsr) {
-        // TODO: Send via queue;
-
+        api.send("ADSR", [
+            adsr.a, adsr.d, adsr.s, adsr.r
+        ]);
         api.sendView("submode", {mode: "adsr", data: adsr});
     }
 
