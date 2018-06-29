@@ -47,7 +47,7 @@ module.exports = ({Arg0, Else}, api) => {
                         api.popState(data.text);
                     }]
                 ],
-                [(args) => args === "Z1" || args === "Z2",
+                [Arg0("Z1", "Z2"),
                     [(api, data, event) => {
                         var char = alphabet[data.row][data.column];
                         if (char === "space") char = " ";
