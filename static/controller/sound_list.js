@@ -156,7 +156,7 @@ function $sound_list() {
                         elem.innerHTML = "";
                         var d = document.createElement('div');
                         d.innerHTML = html;
-                        elem.append(d);
+                        elem.appendChild(d);
                         break;
                     default:
                         console.log("Unkown event: ", event, data);
