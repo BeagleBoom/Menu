@@ -37,9 +37,7 @@ function $sound_list() {
         }
 
         function showInfo(data) {
-            if (showData) {
-                renderInfos(data);
-            }
+            renderInfos(data);
             document.getElementById("info").classList.add("show");
         }
 
@@ -158,7 +156,7 @@ function $sound_list() {
                         }
                         break;
                     case "info":
-                        showInfo(data);
+                        showInfo(data.currentItem);
                         break;
                     case "index":
                         setIndex(data);
