@@ -45,11 +45,11 @@ out = out.split("\n")
         }
         return {out, level};
     }, {out: [], level: 0}).out
-    .reduce(({events, ids}, event, index)=> {
+    /*.reduce(({events, ids}, event, index)=> {
         events[event] = index;
         ids[index] = event;
         return {events, ids}
-    },{events:{}, ids:{}})
+    },{events:{}, ids:{}})*/
 ;
 
 console.log(out);
