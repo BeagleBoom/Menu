@@ -89,7 +89,9 @@
 <span class="count">{{count}}</span>
 
 <ul class="list">
-    {{#each results}}
+
+    {{#each results.results}}
+
     <li class="{{#if active}}active{{/if}}" id="{{id}}">
         <div class="name">{{inc @index}} {{name}}</div>
         <br>

@@ -23,7 +23,6 @@ function $sound_list() {
 
         var results = {};
         var index = 0;
-        var snd = null;
         var currentId = null;
 
         function showInfo(data) {
@@ -36,34 +35,33 @@ function $sound_list() {
         }
 
         function setIndex(newIndex) {
-            currentId = results.results[0].id;
+            currentId = results.currentItem.id;
             if (document.getElementsByClassName("active").length > 0) {
                 currentId = document.getElementsByClassName("active")[0].id;
             }
             if (currentId == null || currentId == undefined) {
-                currentId = results.results[index].id;
+                currentId = results[index].id;
             }
             document.getElementById(currentId).classList.remove("active");
-            index = newIndex;
-            document.getElementById(results.results[index].id).classList.add("active");
+            document.getElementById(results[index].id).classList.add("active");
         }
 
         function scrollTo(index) {
             var list = document.getElementsByClassName("list")[0];
-
             list.style.marginTop = -(index * 53) + "px";
+
         }
 
         function scroll(direction) {
             var list = document.getElementsByClassName("list")[0];
 
             if (direction === "+") {
-                if (index + 1 < results.results.length - 1) {
+                if (index + 1 < results.length - 1) {
                     list.style.marginTop = -(index * 53) + "px";
                 }
             }
             else {
-                if (results.results.length - 1 - index >= 2) {
+                if (results.length - 1 - index >= 2) {
                     list.style.marginTop = -(index * 53) + "px";
                 }
             }
@@ -89,26 +87,36 @@ function $sound_list() {
 
         return {
             start: function (data) {
-                results = data;
-                results.currentItem = data.results[0];
-                setIndex(0);
+                var currentItem = data.currentItem;
+                index = data.index;
+                data = data.results;
+                results = data.results;
+                results.currentItem = currentItem;
+                setIndex(index);
+                scrollTo(index);
                 checkCaptions();
             },
             onEvent: function (event, data) {
                 hideInfo(event);
+                console.log(data.index, event);
                 switch (event) {
                     case "scrollUp":
+                        index = data.index;
                         if (index === 0) {
-                            index = results.results.length;
-                            scrollTo(results.results.length - 3);
+                            scrollTo(results.length - 2);
+                        } else {
+                            scrollTo(index);
                         }
+
                         setIndex(index - 1);
                         scroll("-");
                         break;
                     case "scrollDown":
-                        if (index === results.results.length - 1) {
-                            index = -1;
+                        index = data.index;
+                        if (index === results.length) {
                             scrollTo(0);
+                        } else {
+                            scrollTo(index);
                         }
                         setIndex(index + 1);
                         scroll("+");
@@ -127,19 +135,6 @@ function $sound_list() {
                             elem.classList.add("show");
                         } else {
                             elem.classList.remove("show");
-                        }
-                        break;
-
-                    case "play":
-                        if (snd !== null) {
-                            snd.pause();
-                        }
-                        snd = new Audio(results.results[index].preview); // buffers automatically when created
-                        snd.play();
-                        break;
-                    case "stop":
-                        if (snd !== null) {
-                            snd.pause();
                         }
                         break;
                     case "info":
