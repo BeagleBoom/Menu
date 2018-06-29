@@ -269,6 +269,6 @@ module.exports = ({Arg0, Else}, api) => {
                 ]]
             ]
         }
-    }
+    };
     return scope;
 };
