@@ -24,7 +24,7 @@ input.on('message', function (deltaTime, message) {
         6,//Gain 1
         trigger ? 1 : 0
     ];
-
+    console.log(eventPackage);
     send("ADC_VALUES", eventPackage);
 });
 input.openPort(0);
