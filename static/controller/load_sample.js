@@ -90,7 +90,7 @@ function $load_sample() {
                     elem.innerHTML = "";
                     var d = document.createElement('div');
                     d.innerHTML = html;
-                    elem.append(d);
+                    elem.appendChild(d);
                 }
 
                 function hideSubmode() {
