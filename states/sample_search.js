@@ -66,7 +66,7 @@ module.exports = ({Arg0, Else}, api) => {
         },
         resume: (name, returnData, data) => {
             if (name === "_keyboard") {
-                if (returnData === null) {
+                if (returnData === null || Object.keys(returnData).length == 0) {
                     return api.popState();
                 }
                 api.sendView("loading", true);
