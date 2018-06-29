@@ -5,6 +5,10 @@ function $root() {
                 document.querySelectorAll('.Drow').forEach(function (elem) {
                     elem.style.visibility = 'visible'
                 });
+                document.getElementById("A").style.visibility = 'visible';
+                document.getElementById("B").style.visibility = 'visible';
+                document.getElementById("C").style.visibility = 'visible';
+                document.getElementById("D").style.visibility = 'visible';
             },
 
             start: function (data) {
