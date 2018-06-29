@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "midi": "^0.9.5",
     "request": "^2.85.0",
     "request-progress": "^3.0.0",
     "svmq": "^1.0.6",
