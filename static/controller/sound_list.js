@@ -24,8 +24,22 @@ function $sound_list() {
         var results = {};
         var index = 0;
         var currentId = null;
+        var showData = false;
+
+        function renderInfos(data) {
+            var template = Handlebars.compile(fetchTemplate("info"));
+            var html = template(results.currentItem);
+            var elem = document.getElementById("info");
+            elem.innerHTML = "";
+            var d = document.createElement('div');
+            d.innerHTML = html;
+            elem.appendChild(d);
+        }
 
         function showInfo(data) {
+            if (showData) {
+                renderInfos(data);
+            }
             document.getElementById("info").classList.add("show");
         }
 
@@ -87,7 +101,9 @@ function $sound_list() {
 
         return {
             start: function (data) {
+                console.log(data);
                 var currentItem = data.currentItem;
+                showData = data.showData;
                 index = data.index;
                 data = data.results;
                 results = data.results;
@@ -95,10 +111,13 @@ function $sound_list() {
                 setIndex(index);
                 scrollTo(index);
                 checkCaptions();
+                if (showData) {
+                    showInfo();
+                }
             },
             onEvent: function (event, data) {
                 hideInfo(event);
-                console.log(data.index, event);
+                console.log(data, event);
                 switch (event) {
                     case "scrollUp":
                         index = data.index;
@@ -108,17 +127,18 @@ function $sound_list() {
                             scrollTo(index);
                         }
 
-                        setIndex(index - 1);
+                        setIndex(index);
                         scroll("-");
                         break;
                     case "scrollDown":
+                        console.log(data);
                         index = data.index;
                         if (index === results.length) {
                             scrollTo(0);
                         } else {
                             scrollTo(index);
                         }
-                        setIndex(index + 1);
+                        setIndex(index);
                         scroll("+");
                         break;
                     case "loadNext":
@@ -145,13 +165,8 @@ function $sound_list() {
                         scrollTo(data);
                         break;
                     case "currentItem":
-                        var template = Handlebars.compile(fetchTemplate("info"));
-                        var html = template(data);
-                        var elem = document.getElementById("info");
-                        elem.innerHTML = "";
-                        var d = document.createElement('div');
-                        d.innerHTML = html;
-                        elem.appendChild(d);
+                        results.currentItem = data;
+                        showInfo(data);
                         break;
                     default:
                         console.log("Unkown event: ", event, data);

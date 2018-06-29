@@ -57,7 +57,8 @@ module.exports = ({Arg0, Else}, api) => {
             results: [],
             currentId: 0,
             currentItem: null,
-            index: 0
+            index: 0,
+            showData: false
         },
         captions: {
             "A": "Load",
@@ -84,6 +85,7 @@ module.exports = ({Arg0, Else}, api) => {
                 api.display("sound_list", data.results);
                 api.sendView("currentItem", data.currentItem);
                 api.sendView("index", data.index);
+                api.sendView("info", data);
             }
         }, start: (data) => {
             api.pushState("_keyboard", {text: data.searchTerm});
@@ -92,6 +94,7 @@ module.exports = ({Arg0, Else}, api) => {
             "ROTARY_RIGHT": [
                 [Arg0("Z2"), [
                     (api, data, event) => {
+                        data.showData = false;
                         data.index++;
 
                         if (data.index > data.results.results.length - 1) {
@@ -106,6 +109,7 @@ module.exports = ({Arg0, Else}, api) => {
             "ROTARY_LEFT": [
                 [Arg0("Z2"), [
                     (api, data, event) => {
+                        data.showData = false;
                         data.index--;
                         if (data.index === -1) {
                             data.index = data.results.results.length - 1;
@@ -119,11 +123,13 @@ module.exports = ({Arg0, Else}, api) => {
             "BUTTON_UP": [
                 [Arg0("A"), [
                     (api, data, event) => {
+                        data.showData = false;
                         api.pushState("load_sample", {item: data.currentItem, settings: data.settings, old_data: data});
                     }
                 ]],
                 [Arg0("C"), [
                     (api, data, event) => {
+                        data.showData = false;
                         if (data.results.previous !== null) {
                             let loadUrl = new URL(data.results.previous);
                             let searchParams = new URLSearchParams(loadUrl.searchParams);
@@ -139,6 +145,7 @@ module.exports = ({Arg0, Else}, api) => {
                 ]],
                 [Arg0("D"), [
                     (api, data, event) => {
+                        data.showData = false;
                         if (data.results.next !== null) {
                             let loadUrl = new URL(data.results.next);
                             let searchParams = new URLSearchParams(loadUrl.searchParams);
@@ -157,8 +164,8 @@ module.exports = ({Arg0, Else}, api) => {
                         if (data.currentItem === null) {
                             data.currentItem = data.results.results[0];
                         }
+                        data.showData = true;
                         api.sendView("currentItem", data.currentItem);
-
                         api.sendView("info", data);
                     }
                 ]],
