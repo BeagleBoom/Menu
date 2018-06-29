@@ -82,10 +82,10 @@ module.exports = ({Arg0, Else}, api) => {
             }
 
             if (name === "load_sample") {
-                api.display("sound_list", data.results);
+                api.display("sound_list", data);
                 api.sendView("currentItem", data.currentItem);
                 api.sendView("index", data.index);
-                api.sendView("info", data);
+                //api.sendView("info", data);
             }
         }, start: (data) => {
             api.pushState("_keyboard", {text: data.searchTerm});
