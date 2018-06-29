@@ -1,4 +1,4 @@
-module.exports = ({Arg0, Else}) => {
+module.exports = ({Arg0, Else}, api) => {
     return {
         name: "root",
         title: "Start",
@@ -10,30 +10,38 @@ module.exports = ({Arg0, Else}) => {
         },
 
         data: {
-            // initial variables
+            settings: {}
         },
-        resume: (name, returnData) => {
+        resume: (name, returnData, data) => {
             console.log("Resume root from:", name, returnData);
+            console.log("a", data);
+            api.getSettings().then((tmp) => {
+                data.settings = tmp
+            });
+            api.display("root", data);
         },
-        start: (name) => {
-            console.log("Start:", name);
+        start: (data) => {
+            api.getSettings().then((tmp) => {
+                data.settings = tmp;
+            });
+            api.display("root", data);
         },
 
         events: {
             "BUTTON_UP": [
                 [Arg0("A"), [
                     (api, data, event) => {
-                        api.pushState("load_sample");
+                        api.pushState("load_sample", data);
                     }
                 ]],
                 [Arg0("C"), [
                     (api, data, event) => {
-                        api.pushState("sample_search");
+                        api.pushState("sample_search", data);
                     }
                 ]],
                 [Arg0("D"), [
                     (api, data, event) => {
-                        api.pushState("sample_record");
+                        api.pushState("sample_record", data);
                     }
                 ]]
             ]
