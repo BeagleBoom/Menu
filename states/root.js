@@ -13,6 +13,11 @@ module.exports = ({Arg0, Else}, api) => {
             settings: {}
         },
         resume: (name, returnData, data) => {
+            document.getElementById("A").style.visibility = 'visible';
+            document.getElementById("B").style.visibility = 'visible';
+            document.getElementById("C").style.visibility = 'visible';
+            document.getElementById("D").style.visibility = 'visible';
+
             console.log("Resume root from:", name, returnData);
             console.log("a", data);
             api.getSettings().then((tmp) => {
