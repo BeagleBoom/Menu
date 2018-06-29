@@ -183,12 +183,12 @@ function loadPartial(name) {
     return partials[name];
 }
 
-;(function() {
+;(function () {
     // helpers
-    var regExp = function(name) {
-        return new RegExp('(^| )'+ name +'( |$)');
+    var regExp = function (name) {
+        return new RegExp('(^| )' + name + '( |$)');
     };
-    var forEach = function(list, fn, scope) {
+    var forEach = function (list, fn, scope) {
         for (var i = 0; i < list.length; i++) {
             fn.call(scope, list[i]);
         }
@@ -200,28 +200,28 @@ function loadPartial(name) {
     }
 
     ClassList.prototype = {
-        add: function() {
-            forEach(arguments, function(name) {
+        add: function () {
+            forEach(arguments, function (name) {
                 if (!this.contains(name)) {
-                    this.element.className += ' '+ name;
+                    this.element.className += ' ' + name;
                 }
             }, this);
         },
-        remove: function() {
-            forEach(arguments, function(name) {
+        remove: function () {
+            forEach(arguments, function (name) {
                 this.element.className =
                     this.element.className.replace(regExp(name), '');
             }, this);
         },
-        toggle: function(name) {
+        toggle: function (name) {
             return this.contains(name)
                 ? (this.remove(name), false) : (this.add(name), true);
         },
-        contains: function(name) {
+        contains: function (name) {
             return regExp(name).test(this.element.className);
         },
         // bonus..
-        replace: function(oldName, newName) {
+        replace: function (oldName, newName) {
             this.remove(oldName), this.add(newName);
         }
     };
@@ -229,7 +229,7 @@ function loadPartial(name) {
     // IE8/9, Safari
     if (!('classList' in Element.prototype)) {
         Object.defineProperty(Element.prototype, 'classList', {
-            get: function() {
+            get: function () {
                 return new ClassList(this);
             }
         });
@@ -240,3 +240,11 @@ function loadPartial(name) {
         DOMTokenList.prototype.replace = ClassList.prototype.replace;
     }
 })();
+if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = function (callback, thisArg) {
+        thisArg = thisArg || window;
+        for (var i = 0; i < this.length; i++) {
+            callback.call(thisArg, this[i], i, this);
+        }
+    };
+}
