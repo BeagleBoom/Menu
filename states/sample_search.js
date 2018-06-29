@@ -176,12 +176,12 @@ module.exports = ({Arg0, Else}, api) => {
                         api.sendView("info", data);
                     }
                 ]],
-                [Arg0("PLAY"), [
+                [Arg0("PLAY_RECORD"), [
                     (api, data, event) => {
                         api.sendView("play", data.currentItem);
                     }
                 ]],
-                [Arg0("STOP"), [
+                [Arg0("STOP_CLEAR"), [
                     (api, data, event) => {
                         api.sendView("stop");
                     }
