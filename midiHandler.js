@@ -5,6 +5,13 @@ const {send, start} = require("./lib/messageQueue")();
 start(true);
 
 var input = new midi.input();
+
+let count = input.getPortCount();
+console.log("found devices: ", count);
+for (let i = 0; i < count; i++) {
+    console.log(input.getPortName(i));
+}
+
 input.on('message', function (deltaTime, message) {
     let trigger = false;
     let note = message[1];
