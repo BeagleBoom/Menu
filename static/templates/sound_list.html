@@ -53,11 +53,18 @@
     }
 
     #loading.show i {
+        -webkit-animation: 1s rotateRight infinite linear;
         animation: 1s rotateRight infinite linear;
     }
 
     #loading {
         display: none;
+    }
+
+    @-webkit-keyframes rotateRight {
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
     }
 
     @keyframes rotateRight {
