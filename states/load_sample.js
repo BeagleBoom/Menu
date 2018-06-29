@@ -66,7 +66,7 @@ module.exports = ({Arg0, Else}, api) => {
 
     function sendADSR(adsr) {
         api.send("ADSR", [
-            adsr.a, adsr.d, adsr.s, adsr.r
+            adsr.attack, adsr.decay, adsr.sustain, adsr.release
         ]);
         api.sendView("submode", {mode: "adsr", data: adsr});
     }
