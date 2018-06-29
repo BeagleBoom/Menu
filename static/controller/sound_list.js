@@ -25,6 +25,8 @@ function $sound_list() {
         var index = 0;
         var currentId = null;
         var showData = false;
+        var hasNext = false;
+        var hasPrev = false;
 
         function renderInfos(data) {
             var template = Handlebars.compile(fetchTemplate("info"));
@@ -80,13 +82,14 @@ function $sound_list() {
         }
 
         function checkCaptions() {
-            if (results.next === null) {
+            console.log("checkCaptions", results);
+            if (!hasNext) {
                 document.getElementById("D").style.visibility = 'hidden';
             } else {
                 document.getElementById("D").style.visibility = 'visible';
             }
 
-            if (results.previous === null) {
+            if (!hasPrev) {
                 document.getElementById("C").style.visibility = 'hidden';
             } else {
                 document.getElementById("C").style.visibility = 'visible';
@@ -99,11 +102,13 @@ function $sound_list() {
 
         return {
             start: function (data) {
-                console.log(data);
                 var currentItem = data.currentItem;
                 showData = data.showData;
                 index = data.index;
                 data = data.results;
+                console.log("start", data);
+                hasPrev = (data.previous != null);
+                hasNext = (data.next != null);
                 results = data.results;
                 results.currentItem = currentItem;
                 setIndex(index);

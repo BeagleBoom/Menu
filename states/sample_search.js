@@ -135,9 +135,10 @@ module.exports = ({Arg0, Else}, api) => {
                             let searchParams = new URLSearchParams(loadUrl.searchParams);
                             api.sendView("loading", true);
                             search(data.searchTerm, data.settings.freesound, searchParams.get("page")).then(result => {
+                                data.index = 0;
                                 data.results = result;
-                                data.currentItem = data[0];
-                                api.display("sound_list", result);
+                                data.currentItem = data.results.results[0];
+                                api.display("sound_list", data);
                                 api.sendView("loading", false);
                             });
                         }
@@ -151,9 +152,10 @@ module.exports = ({Arg0, Else}, api) => {
                             let searchParams = new URLSearchParams(loadUrl.searchParams);
                             api.sendView("loading", true);
                             search(data.searchTerm, data.settings.freesound, searchParams.get("page")).then(result => {
+                                data.index = 0;
                                 data.results = result;
-                                api.display("sound_list", result);
-                                data.currentItem = data[0];
+                                api.display("sound_list", data);
+                                data.currentItem = data.results.results[0];
                                 api.sendView("loading", false);
                             });
                         }
