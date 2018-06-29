@@ -69,12 +69,13 @@ module.exports = ({Arg0, Else}, api) => {
                 if (returnData === null || Object.keys(returnData).length == 0) {
                     return api.popState();
                 }
+                api.display("sound_list", []);
                 api.sendView("loading", true);
                 search(returnData, data.settings.freesound).then(result => {
                     data.searchTerm = returnData;
                     data.results = result;
                     data.currentItem = result.results[0];
-                    api.display("sound_list", result);
+                    api.display("sound_list", data);
                     api.sendView("loading", false);
                 });
             }
@@ -88,21 +89,6 @@ module.exports = ({Arg0, Else}, api) => {
             api.pushState("_keyboard", {text: data.searchTerm});
         },
         events: {
-            "FREESOUND_SEARCHRESULTS": [
-                [Else, [
-                    (api, data, event) => {
-                        data.results[data.index].active = true;
-                        data.results = data;
-                        data.currentItem = data[0];
-                        api.pushState("list_results", {
-                                origin: "freesound",
-                                results: data,
-                                title: "Freesound search results"
-                            }
-                        );
-                    }
-                ]],
-            ],
             "ROTARY_RIGHT": [
                 [Arg0("Z2"), [
                     (api, data, event) => {
@@ -176,12 +162,12 @@ module.exports = ({Arg0, Else}, api) => {
                         api.sendView("info", data);
                     }
                 ]],
-                [Arg0("PLAY_RECORD"), [
+                [Arg0("PLAY"), [
                     (api, data, event) => {
                         api.sendView("play", data.currentItem);
                     }
                 ]],
-                [Arg0("STOP_CLEAR"), [
+                [Arg0("STOP"), [
                     (api, data, event) => {
                         api.sendView("stop");
                     }
