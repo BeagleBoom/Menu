@@ -112,7 +112,7 @@ module.exports = ({Arg0, Else}, api) => {
                     (api, data, event) => {
                         switch (data.submode) {
                             case "adsr":
-                                data.params.adsr.attack--;
+                                data.params.adsr.attack -= 100;
                                 if (data.params.adsr.attack < 0)
                                     data.params.adsr.attack = 0;
                             default:
@@ -125,9 +125,9 @@ module.exports = ({Arg0, Else}, api) => {
                     (api, data, event) => {
                         switch (data.submode) {
                             case "adsr":
-                                data.params.adsr.decay--;
-                                if (data.params.adsr.decay < 0)
-                                    data.params.adsr.decay = 0;
+                                data.params.adsr.decay -= 100;
+                                if (data.params.adsr.decay < 1)
+                                    data.params.adsr.decay = 1;
                             default:
                                 break;
                         }
@@ -138,7 +138,7 @@ module.exports = ({Arg0, Else}, api) => {
                     (api, data, event) => {
                         switch (data.submode) {
                             case "adsr":
-                                data.params.adsr.sustain--;
+                                data.params.adsr.sustain -= 0.1;
                                 if (data.params.adsr.sustain < 0)
                                     data.params.adsr.sustain = 0;
                             default:
@@ -150,7 +150,7 @@ module.exports = ({Arg0, Else}, api) => {
                     (api, data, event) => {
                         switch (data.submode) {
                             case "adsr":
-                                data.params.adsr.release--;
+                                data.params.adsr.release -= 100;
                                 if (data.params.adsr.release < 0)
                                     data.params.adsr.release = 0;
                             default:
@@ -175,7 +175,7 @@ module.exports = ({Arg0, Else}, api) => {
                     (api, data, event) => {
                         switch (data.submode) {
                             case "adsr":
-                                data.params.adsr.attack++;
+                                data.params.adsr.attack += 100;
                             default:
                                 break;
                         }
@@ -185,7 +185,7 @@ module.exports = ({Arg0, Else}, api) => {
                     (api, data, event) => {
                         switch (data.submode) {
                             case "adsr":
-                                data.params.adsr.decay++;
+                                data.params.adsr.decay += 100;
                             default:
                                 break;
                         }
@@ -196,7 +196,15 @@ module.exports = ({Arg0, Else}, api) => {
                     (api, data, event) => {
                         switch (data.submode) {
                             case "adsr":
-                                data.params.adsr.sustain++;
+                                data.params.adsr.sustain += 0.1;
+                                if (data.params.adsr.sustain < 0.1) {
+                                    data.params.adsr.sustain = 0.1;
+                                }
+
+                                if (data.params.adsr.sustain > 1) {
+                                    data.params.adsr.sustain = 1;
+                                }
+
                             default:
                                 break;
                         }
@@ -206,7 +214,7 @@ module.exports = ({Arg0, Else}, api) => {
                     (api, data, event) => {
                         switch (data.submode) {
                             case "adsr":
-                                data.params.adsr.release++;
+                                data.params.adsr.release += 100;
                             default:
                                 break;
                         }
