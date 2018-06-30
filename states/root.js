@@ -49,10 +49,6 @@ module.exports = ({Arg0, Else}, api) => {
         },
         resume: (name, returnData, data) => {
             console.log("Resume root from:", name, returnData);
-            console.log("a", data);
-            api.getSettings().then((tmp) => {
-                data.settings = tmp
-            });
             api.display("root", data);
         },
         start: (data) => {
