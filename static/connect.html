@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" media="all">
+</head>
+<body>
+
+<div class="top">
+    <div class="row" id="A">
+        A
+    </div>
+    <div class="row" id="B">B</div>
+    <div class="row" id="C">C</div>
+    <div class="row" id="D">D</div>
+</div>
+<div id="content">
+
+</div>
+<div class="bottom">
+    <div class="row" id="R1">R1</div>
+    <div class="row" id="R2">R2</div>
+    <div class="row" id="R3">R3</div>
+    <div class="row" id="R4">R4</div>
+</div>
+
+</body>
+<style>
+    html {
+        background: white;
+        padding: 0;
+    }
+
+    body {
+        width: 320px;
+        height: 240px;
+        background: black;
+        position: relative;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        font-family: Monospace;
+        background-image: url(bg.png);
+    }
+
+    #loading {
+
+    }
+
+    .bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    #content {
+        position: absolute;
+        top: 25px;
+        bottom: 25px;
+        left: 0;
+        right: 0;
+        color: #f16f00;
+        overflow: hidden;
+    }
+
+    .top, .bottom {
+        height: 25px;
+
+    }
+
+    .top > .row, .bottom > .row {
+        height: 100%;
+        display: table-cell;
+        float: left;
+        width: 25%;
+        text-align: center;
+        line-height: 1.5em;
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+</style>
+<script>
+    function reboot() {
+        var socket = new WebSocket("ws://localhost:8080");
+        var re = false;
+
+        function delay() {
+            if (re) {
+                return;
+            }
+            re = true;
+            setTimeout(reboot, 500);
+        }
+
+        socket.onclose = delay;
+        socket.onerror = delay;
+
+        socket.onopen = function () {
+            document.location.href="http://localhost:8080";
+        }
+    }
+    reboot();
+</script>
+</html>
