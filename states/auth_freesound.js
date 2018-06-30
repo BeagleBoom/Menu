@@ -11,7 +11,7 @@ module.exports = ({Arg0, Else}, api) => {
             let timer = setInterval(async () => {
                 api.getContent(data.freesound.baseUrl + "/poll").then((resp) => {
                     let response = JSON.parse(resp);
-                    if (response.access_token !== undefined) {
+                    if (response.code === 200) {
                         clearInterval(timer);
                         api.popState(null);
                     }
