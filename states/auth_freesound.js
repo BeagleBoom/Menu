@@ -9,6 +9,7 @@ module.exports = ({Arg0, Else}, api) => {
             let currentTime = new Date();
 
             if(data.oAuth === undefined || data.oAuth.expires_at === undefined ||data.oAuth.expires_at <= currentTime) {
+                console.log(data);
                 api.getContent(data.freesound.baseUrl + "/poll").then((resp) => {
                     let response = JSON.parse(resp);
 
