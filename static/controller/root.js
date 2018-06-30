@@ -1,6 +1,6 @@
 function $root() {
     return function () {
-        let ips = {};
+        var ips = {};
 
         function displayIp(index) {
             document.querySelectorAll('.ip.active').forEach(function (elem) {
