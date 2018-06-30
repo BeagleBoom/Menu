@@ -8,9 +8,9 @@ module.exports = ({Arg0, Else}, api) => {
         start: (data) => {
             let currentTime = new Date();
 
-            if(data.oAuth === undefined || data.oAuth.expires_at === undefined ||data.oAuth.expires_at <= currentTime) {
+            if(data.settings.oAuth === undefined || data.settings.oAuth.expires_at === undefined ||data.settings.oAuth.expires_at <= currentTime) {
                 console.log(data);
-                api.getContent(data.freesound.baseUrl + "/poll").then((resp) => {
+                api.getContent(data.settings.freesound.baseUrl + "/poll").then((resp) => {
                     let response = JSON.parse(resp);
 
                     //Everything is Okay, let's go to the last state
@@ -21,13 +21,13 @@ module.exports = ({Arg0, Else}, api) => {
 
                     //On Error, just show the oAuth QR Code and poll
                     } else {
-                        api.getContent(data.freesound.baseUrl + "/getauthurl").then((response) => {
+                        api.getContent(data.settings.freesound.baseUrl + "/getauthurl").then((response) => {
                             let resp = JSON.parse(response);
                             api.display("auth_freesound", resp);
                         });
 
                         pollTimer = setInterval(async () => {
-                            api.getContent(data.freesound.baseUrl + "/poll").then((resp) => {
+                            api.getContent(data.settings.freesound.baseUrl + "/poll").then((resp) => {
                                 let response = JSON.parse(resp);
                                 if (response.code >= 200 && response.code <= 203) {
                                     clearInterval(pollTimer);
