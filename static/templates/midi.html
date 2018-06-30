@@ -1,0 +1,54 @@
+<style>
+    .list {
+        padding-left: 0;
+    }
+
+    .list > li {
+        padding-left: 1rem;
+        list-style: none;
+        height: 21px;
+        border-bottom: 1px solid #f16f00;
+    }
+
+    .list .name {
+        overflow: hidden;
+        width: 100%;
+        height: 1rem;
+    }
+
+    .list .star, .list .mono, .list .samplerate {
+        float: right;
+        margin-right: 1rem;
+    }
+
+    .list .duration {
+        float: right;
+
+    }
+
+    .list .active {
+        background: rgba(242, 139, 12, 0.5);
+        color: white;
+    }
+
+    .list i.fa {
+        font-size: 0.7em;
+    }
+
+    span.count {
+        position: absolute;
+    }
+
+    li.selected > .name:after {
+        content: " (active)";
+    }
+</style>
+
+<ul class="list">
+
+    {{#each devices}}
+    <li id="device-{{@index}}">
+        <div class="name">{{this}}</div>
+    </li>
+    {{/each}}
+</ul>

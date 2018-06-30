@@ -1,4 +1,29 @@
 var socket = new WebSocket("ws://" + document.location.host);
+
+
+function reboot() {
+    var socket = new WebSocket("ws://" + document.location.host);
+    var re = false;
+
+    function delay() {
+        if (re) {
+            return;
+        }
+        re = true;
+        setTimeout(reboot, 500);
+    }
+
+    socket.onclose = delay;
+    socket.onerror = delay;
+
+    socket.onopen = function () {
+        document.location.reload();
+    }
+}
+
+socket.onclose = reboot;
+socket.onerror = reboot;
+
 var views = {};
 
 var colors = {};
