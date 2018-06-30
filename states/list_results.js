@@ -1,3 +1,5 @@
+const MPlayer = require('mplayer');
+const player = new MPlayer();
 module.exports = ({Arg0, Else}, api) => {
     return {
         name: "list_results",
@@ -27,16 +29,17 @@ module.exports = ({Arg0, Else}, api) => {
             });
         },
         events: {
-            "BUTTON_UP": [
+            "BUTTON_DOWN": [
                 [Arg0("PLAY"), [
                     (api, data, event) => {
                         console.log("Playing sound ", this.data.selectedItem);
                         switch (this.data.origin) {
                             case "freesound":
-                                api.send("FREESOUND_PLAY", this.data.selectedItem);
+                                api.send("PLAY_PREVIEW", this.data.selectedItem);
+                                player.openFile('http://freesound.org/data/previews/392/392617_7383104-lq.mp3');
                                 break;
                             case "local":
-                                api.send("LOCAL_PLAY", this.data.results[this.data.selectedItem].path);
+                                api.send("PLAY_PREVIEW", this.data.results[this.data.selectedItem].path);
                                 break;
                             default:
                                 console.error("unknown service: ", this.data.origin);
@@ -45,7 +48,8 @@ module.exports = ({Arg0, Else}, api) => {
                 ]],
                 [Arg0("STOP"), [
                     (api, data, event) => {
-                        api.send("STOP_PLAYBACK");
+                        player.stop();
+                        api.send("STOP_PREVIEW");
                     }
                 ]],
                 [Arg0("Z2"), [

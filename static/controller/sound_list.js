@@ -49,6 +49,8 @@ function $sound_list() {
         }
 
         function setIndex(newIndex) {
+            // todo: show play status
+
             currentId = results.currentItem.id;
             if (document.getElementsByClassName("active").length > 0) {
                 currentId = document.getElementsByClassName("active")[0].id;
