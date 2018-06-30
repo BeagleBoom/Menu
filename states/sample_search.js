@@ -66,6 +66,11 @@ module.exports = ({Arg0, Else}, api) => {
             "D": "Page >>"
         },
         resume: (name, returnData, data) => {
+            if(name === "auth_freesound") {
+                api.pushState("_keyboard", {text: data.searchTerm});
+            }
+
+
             if (name === "_keyboard") {
                 if (returnData === null || Object.keys(returnData).length == 0) {
                     return api.popState();
@@ -88,9 +93,7 @@ module.exports = ({Arg0, Else}, api) => {
                 //api.sendView("info", data);
             }
         }, start: (data) => {
-            // todo: Check Freesound connection
-
-            api.pushState("_keyboard", {text: data.searchTerm});
+            api.getSettings();
         },
         events: {
             "ROTARY_RIGHT": [
