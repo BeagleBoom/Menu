@@ -1,0 +1,67 @@
+<style>
+    div.ip {
+        height: 215px;
+        text-align: center;
+        display: none;
+    }
+
+    div.ip.active {
+        display: block;
+    }
+
+    p.address {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    div.qr {
+        background-color: white;
+        width: 35%;
+        margin: 0 auto;
+        margin-bottom: 0.2rem;
+    }
+
+    p.error {
+        color: red;
+    }
+
+    #no_internet {
+        display: block;
+        position: absolute;
+        bottom: 56px;
+        width: 20%;
+        right: 30px;
+    }
+
+    .blink {
+        animation: blink-animation 1s steps(5, start) infinite;
+        -webkit-animation: blink-animation 1s steps(5, start) infinite;
+    }
+
+    @keyframes blink-animation {
+        to {
+            visibility: hidden;
+        }
+    }
+
+    @-webkit-keyframes blink-animation {
+        to {
+            visibility: hidden;
+        }
+    }
+</style>
+<div id="ips">
+    {{#each ips}}
+    <div class="ip" id="ip{{inc @index}}">
+        <p class="address">IP-Address: {{address}}</p>
+        <div class="qr">{{{qr}}}</div>
+        <p class="remote">Remote Control: {{url}}</p>
+    </div>
+    {{/each}}
+</div>
+
+<div id="no_internet">
+    <p class="error blink">
+        NO INTERNET CONNECTION
+    </p>
+</div>

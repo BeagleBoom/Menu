@@ -88,6 +88,8 @@ module.exports = ({Arg0, Else}, api) => {
                 //api.sendView("info", data);
             }
         }, start: (data) => {
+            // todo: Check Freesound connection
+
             api.pushState("_keyboard", {text: data.searchTerm});
         },
         events: {
