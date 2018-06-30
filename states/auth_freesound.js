@@ -4,12 +4,12 @@ module.exports = ({Arg0, Else}, api) => {
         title: "Freesound Authentification",
 
         start: (data) => {
-            api.getContent(data.freesound.baseUrl + "getauthurl").then((response) => {
+            api.getContent(data.freesound.baseUrl + "/getauthurl").then((response) => {
                 let resp = JSON.parse(response);
                 api.display("auth_freesound", resp);
             });
             let timer = setInterval(async () => {
-                api.getContent(data.freesound.baseUrl + "poll").then((resp) => {
+                api.getContent(data.freesound.baseUrl + "/poll").then((resp) => {
                     let response = JSON.parse(resp);
                     if (response.access_token !== undefined) {
                         clearInterval(timer);
