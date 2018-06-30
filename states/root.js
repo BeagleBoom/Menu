@@ -36,6 +36,7 @@ module.exports = ({Arg0, Else}, api) => {
         info: "Please choose whether you want to record or search a sample.",
         captions: {
             "A": "Load",
+            "B": "Midi",
             "C": "Search",
             "D": "Record"
         },
@@ -91,6 +92,11 @@ module.exports = ({Arg0, Else}, api) => {
                 [Arg0("C"), [
                     (api, data, event) => {
                         api.pushState("sample_search", data);
+                    }
+                ]],
+                [Arg0("B"), [
+                    (api, data, event) => {
+                        api.pushState("midi");
                     }
                 ]],
                 [Arg0("D"), [
