@@ -94,7 +94,6 @@ module.exports = ({Arg0, Else}, api) => {
             }
         }, start: (data) => {
             api.pushState("auth_freesound", {});
-            
         },
         events: {
             "ROTARY_RIGHT": [
