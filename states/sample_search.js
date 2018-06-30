@@ -94,7 +94,8 @@ module.exports = ({Arg0, Else}, api) => {
             }
         }, start: (data) => {
             let oAuth_settings = api.getSetting("oAuth");
-            api.pushState("auth_freesound", Object.assign(data, { "oAuth" : oAuth_settings }));
+            data.settings = Object.assign(data.settings, { "oAuth" : oAuth_settings })
+            api.pushState("auth_freesound",  data);
         },
         events: {
             "ROTARY_RIGHT": [
