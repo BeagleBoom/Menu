@@ -93,7 +93,7 @@ module.exports = ({Arg0, Else}, api) => {
                 //api.sendView("info", data);
             }
         }, start: (data) => {
-            api.pushState("auth_freesound", {});
+            api.pushState("auth_freesound", data);
         },
         events: {
             "ROTARY_RIGHT": [
