@@ -15,7 +15,6 @@ module.exports = ({Arg0, Else}, api) => {
 
                     //Everything is Okay, let's go to the last state
                     if (response.code >= 200 && response.code <= 203) {
-                        clearInterval(timer);
                         api.setSetting("oAuth", response);
                         api.popState(null);
 
