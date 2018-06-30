@@ -15,14 +15,16 @@ module.exports = ({Arg0, Else}, api) => {
 
                     //Everything is Okay, let's go to the last state
                     if (response.code >= 200 && response.code <= 203) {
-                        clearInterval(timer);
+                        console.log("Setting oAuth Data: " + JSON.stringify(response, null, 3));
                         api.setSetting("oAuth", response);
                         api.popState(null);
 
                     //On Error, just show the oAuth QR Code and poll
                     } else {
+                        console.log("Error: " + response.code);
                         api.getContent(data.settings.freesound.baseUrl + "/getauthurl").then((response) => {
                             let resp = JSON.parse(response);
+                            console.log("Displaying QR Code");
                             api.display("auth_freesound", resp);
                         });
 
@@ -30,6 +32,7 @@ module.exports = ({Arg0, Else}, api) => {
                             api.getContent(data.settings.freesound.baseUrl + "/poll").then((resp) => {
                                 let response = JSON.parse(resp);
                                 if (response.code >= 200 && response.code <= 203) {
+                                    console.log("Polling...");
                                     clearInterval(pollTimer);
                                     api.popState(null);
                                 }
