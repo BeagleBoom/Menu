@@ -93,7 +93,8 @@ module.exports = ({Arg0, Else}, api) => {
                 //api.sendView("info", data);
             }
         }, start: (data) => {
-            api.getSettings();
+            let oAuth_settings = api.getSetting("oAuth");
+            api.pushState("auth_freesound", Object.assign(data, { "oAuth" : oAuth_settings }));
         },
         events: {
             "ROTARY_RIGHT": [
