@@ -5,7 +5,7 @@ let {URL, URLSearchParams} = require("url");
 const search = (text, freesound, startPage = 1) => {
     let oAuth = {
         token: {
-            access_token: freesound.token,
+            access_token: freesound.access_token,
             token_type: "Bearer"
         }
     };
@@ -77,7 +77,9 @@ module.exports = ({Arg0, Else}, api) => {
                 }
                 api.display("sound_list", []);
                 api.sendView("loading", true);
-                search(returnData, data.settings.freesound).then(result => {
+
+                let oAuthConfig = api.getSetting("oAuth");
+                search(returnData,  oAuthConfig).then(result => {
                     data.searchTerm = returnData;
                     data.results = result;
                     data.currentItem = result.results[0];
