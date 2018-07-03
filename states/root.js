@@ -55,7 +55,7 @@ module.exports = ({Arg0, Else}, api) => {
         start: (data) => {
             function checkInternet() {
                 let dns = require('dns');
-                dns.lookupService('8.8.8.8', 53, function (err) {
+                dns.lookupService('iana.org', function (err) {
                     let newState = true;
                     if (err) {
                         newState = false;
