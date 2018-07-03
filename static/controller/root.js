@@ -38,6 +38,7 @@ function $root() {
                 });
             },
             onEvent: function (event, data) {
+                console.log(event, data);
                 switch (event) {
                     case "SHOW_IP":
                         displayIp(data.ipIndex);
