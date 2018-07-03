@@ -3,12 +3,12 @@ var socket = new WebSocket("ws://" + document.location.host);
 
 function showDisconnected() {
     var elem = document.getElementsByClassName("disconnected")[0];
-    elem.style.display = 'block';
+    elem.style.display = 'none
 }
 
 function hideDisconnected() {
     var elem = document.getElementsByClassName("disconnected")[0];
-    elem.style.display = 'none';
+    elem.style.display = 'block';
 }
 
 function reboot() {
@@ -21,7 +21,6 @@ function reboot() {
             return;
         }
         hideDisconnected();
-        console.log("No Connection");
         re = true;
         setTimeout(reboot, 500);
     }
