@@ -80,7 +80,7 @@ module.exports = ({Arg0, Else}, api) => {
             api.display("root", data);
 
 
-            diskspace.check('/dev/volume', function (err, result) {
+            diskspace.check('/dev/sda1', function (err, result) {
                 console.log(err, result);
                 api.sendView("DISK_SPACE", result);
             });
