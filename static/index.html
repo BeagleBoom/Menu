@@ -27,6 +27,10 @@
     <div class="row" id="R4">R4</div>
 </div>
 
+<div class="disconnected">
+    <p class="blink">Disconnected from service. Trying to reconnect...
+</div>
+
 </body>
 <style>
     html {
@@ -82,6 +86,39 @@
         font-weight: bold;
         font-size: 1.2em;
     }
+
+    .blink {
+        animation: blink-animation 1s steps(5, start) infinite;
+        -webkit-animation: blink-animation 1s steps(5, start) infinite;
+    }
+
+    @keyframes blink-animation {
+        to {
+            visibility: hidden;
+        }
+    }
+
+    @-webkit-keyframes blink-animation {
+        to {
+            visibility: hidden;
+        }
+    }
+
+    div.disconnected {
+        display: none;
+
+        position: absolute;
+        color: #f16f00;
+        background: black;
+        border: 1px solid #f16f00;
+        width: 92%;
+        text-align: center;
+        margin: 0 auto;
+        left: 5px;
+        top: 83px;
+        padding: 0.5rem;
+    }
+
 
 </style>
 <script src="logic.js"></script>

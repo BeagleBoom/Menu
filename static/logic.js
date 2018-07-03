@@ -1,14 +1,27 @@
 var socket = new WebSocket("ws://" + document.location.host);
 
 
+function showDisconnected() {
+    var elem = document.getElementsByClassName("disconnected")[0];
+    elem.style.display = 'block';
+}
+
+function hideDisconnected() {
+    var elem = document.getElementsByClassName("disconnected")[0];
+    elem.style.display = 'none';
+}
+
 function reboot() {
     var socket = new WebSocket("ws://" + document.location.host);
     var re = false;
 
     function delay() {
         if (re) {
+            showDisconnected();
             return;
         }
+        hideDisconnected();
+        console.log("No Connection");
         re = true;
         setTimeout(reboot, 500);
     }

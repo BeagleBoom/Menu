@@ -59,6 +59,12 @@
                     <div class="Drow" id="R3">R3</div>
                     <div class="Drow" id="R4">R4</div>
                 </div>
+
+
+                <div class="disconnected">
+                    <p class="blink">Disconnected from service. Trying to reconnect...
+                    </p>
+                </div>
             </div>
         </div>
         <div class="col">
@@ -145,7 +151,11 @@
             </form>
         </div>
     </div>
+
+
 </div>
+
+
 <script type="text/javascript">
     $("button").on("click", function (evt) {
         let id = $(this).attr("id");
@@ -204,6 +214,38 @@
         line-height: 1.5em;
         font-weight: bold;
         font-size: 1.2em;
+    }
+
+    div.disconnected {
+        display: none;
+
+        position: absolute;
+        color: #f16f00;
+        background: black;
+        border: 1px solid #f16f00;
+        width: 92%;
+        text-align: center;
+        margin: 0 auto;
+        left: 13px;
+        top: 83px;
+        padding: 0.5rem;
+    }
+
+    .blink {
+        animation: blink-animation 1s steps(5, start) infinite;
+        -webkit-animation: blink-animation 1s steps(5, start) infinite;
+    }
+
+    @keyframes blink-animation {
+        to {
+            visibility: hidden;
+        }
+    }
+
+    @-webkit-keyframes blink-animation {
+        to {
+            visibility: hidden;
+        }
     }
 
 </style>
