@@ -57,13 +57,10 @@ module.exports = ({Arg0, Else}, api) => {
                 let dns = require('dns');
 
                 dns.lookup('iana.org', (err, address, family) => {
-                    console.log('address: %j family: IPv%s', address, family);
-
                     let newState = true;
                     if (err) {
                         newState = false;
                     }
-                    console.log(newState);
                     if (newState != data.internetConnection) {
                         data.internetConnection = newState;
                         api.sendView("INTERNET_CONNECTION", data.internetConnection);
@@ -83,11 +80,17 @@ module.exports = ({Arg0, Else}, api) => {
             data.ips = getIPs();
             api.display("root", data);
 
+            function checkDiskspace() {
+                diskspace.check('/dev/sda1', function (err, result) {
+                    console.log(err, result);
+                    api.sendView("DISK_SPACE", result);
+                });
+            }
 
-            diskspace.check('/dev/sda1', function (err, result) {
-                console.log(err, result);
-                api.sendView("DISK_SPACE", result);
-            });
+            checkDiskspace();
+            setInterval(() => {
+                checkDiskspace();
+            }, 1000);
         },
 
         events: {
