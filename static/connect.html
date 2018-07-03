@@ -17,6 +17,11 @@
 </div>
 <div id="content">
 
+    <div class="message">
+        <p class="blink">Waiting for service to bootup
+        </p>
+    </div>
+
 </div>
 <div class="bottom">
     <div class="row" id="R1">R1</div>
@@ -24,7 +29,6 @@
     <div class="row" id="R3">R3</div>
     <div class="row" id="R4">R4</div>
 </div>
-
 </body>
 <style>
     html {
@@ -65,6 +69,16 @@
         overflow: hidden;
     }
 
+    .message {
+        margin: 0 auto;
+        border: 1px solid #f16f00;
+        width: 80%;
+    }
+
+    .message p {
+        text-align: center;
+    }
+
     .top, .bottom {
         height: 25px;
 
@@ -79,6 +93,23 @@
         line-height: 1.5em;
         font-weight: bold;
         font-size: 1.2em;
+    }
+
+    .blink {
+        animation: blink-animation 1s steps(5, start) infinite;
+        -webkit-animation: blink-animation 1s steps(5, start) infinite;
+    }
+
+    @keyframes blink-animation {
+        to {
+            visibility: hidden;
+        }
+    }
+
+    @-webkit-keyframes blink-animation {
+        to {
+            visibility: hidden;
+        }
     }
 
 </style>
@@ -99,9 +130,10 @@
         socket.onerror = delay;
 
         socket.onopen = function () {
-            document.location.href="http://localhost:8080";
+            document.location.href = "http://localhost:8080";
         }
     }
+
     reboot();
 </script>
 </html>
