@@ -33,9 +33,6 @@ function $root() {
                     space = data;
                     circle.classList.add("p" + space.space);
                 }
-
-                console.log(data.space);
-
             }
         }
 
