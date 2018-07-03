@@ -83,7 +83,7 @@ module.exports = ({Arg0, Else}, api) => {
             function checkDiskspace() {
                 diskspace.check('/dev/sda1', function (err, data) {
                     if (!err) {
-                        api.sendView("DISK_SPACE", {space: Math.round((data.free / data.total) * 100)});
+                        api.sendView("DISK_SPACE", {space: Math.round((data.used / data.total) * 100)});
                     } else {
                         api.sendView("DISK_SPACE", -1);
                     }
