@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "diskspace": "^2.0.0",
     "midi": "^0.9.5",
     "mplayer": "^2.1.0",
     "qr-image": "^3.2.0",

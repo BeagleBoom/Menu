@@ -29,6 +29,7 @@ module.exports = ({Arg0, Else}, api) => {
         return ipAdresses;
     }
 
+    const diskspace = require('diskspace');
 
     return {
         name: "root",
@@ -56,7 +57,7 @@ module.exports = ({Arg0, Else}, api) => {
                 let dns = require('dns');
                 dns.lookupService('8.8.8.8', 53, function (err) {
                     let newState = true;
-                    if (err && err.code == "ENOTFOUND") {
+                    if (err) {
                         newState = false;
                     }
                     if (newState != data.internetConnection) {
@@ -66,16 +67,22 @@ module.exports = ({Arg0, Else}, api) => {
                 });
             }
 
+
             setInterval(() => {
                 checkInternet();
             }, 1000);
 
             checkInternet();
-            api.getSettings().then((tmp) => {
+            /*api.getSettings().then((tmp) => {
                 data.settings = tmp;
-            });
+            });*/
             data.ips = getIPs();
             api.display("root", data);
+
+
+            diskspace.check('/dev/volume', function (err, result) {
+                api.sendView("DISK_SPACE", result);
+            });
         },
 
         events: {
