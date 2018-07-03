@@ -3,12 +3,12 @@ var socket = new WebSocket("ws://" + document.location.host);
 
 function showDisconnected() {
     var elem = document.getElementsByClassName("disconnected")[0];
-    elem.style.display = 'none';
+    elem.style.display = 'block';
 }
 
 function hideDisconnected() {
     var elem = document.getElementsByClassName("disconnected")[0];
-    elem.style.display = 'block';
+    elem.style.display = 'none';
 }
 
 function reboot() {
@@ -17,10 +17,10 @@ function reboot() {
 
     function delay() {
         if (re) {
-            showDisconnected();
+            hideDisconnected();
             return;
         }
-        hideDisconnected();
+        showDisconnected();
         re = true;
         setTimeout(reboot, 500);
     }
