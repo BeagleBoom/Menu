@@ -2,10 +2,11 @@ let request = require('then-request');
 let querystring = require("querystring");
 let {URL, URLSearchParams} = require("url");
 
-const search = (text, freesound, startPage = 1) => {
+const search = (text, oAuthSettings, startPage = 1) => {
+    
     let oAuth = {
         token: {
-            access_token: freesound.access_token,
+            access_token: oAuthSettings.access_token,
             token_type: "Bearer"
         }
     };
@@ -67,7 +68,11 @@ module.exports = ({Arg0, Else}, api) => {
         },
         resume: (name, returnData, data) => {
             if(name === "auth_freesound") {
-                api.pushState("_keyboard", {text: data.searchTerm});
+                if(typeof(returnData) === "object" && Object.keys(returnData).length > 0) {
+                    api.pushState("_keyboard", {text: data.searchTerm});
+                } else {
+                    api.popState(null);
+                }
             }
 
 
@@ -95,8 +100,8 @@ module.exports = ({Arg0, Else}, api) => {
                 //api.sendView("info", data);
             }
         }, start: (data) => {
-            let oAuth_settings = api.getSetting("oAuth");
-            data.settings = Object.assign(data.settings, { "oAuth" : oAuth_settings })
+            let freesound = api.getSetting("freesound");
+            data.freesound = freesound;
             api.pushState("auth_freesound",  data);
         },
         events: {
@@ -143,7 +148,8 @@ module.exports = ({Arg0, Else}, api) => {
                             let loadUrl = new URL(data.results.previous);
                             let searchParams = new URLSearchParams(loadUrl.searchParams);
                             api.sendView("loading", true);
-                            search(data.searchTerm, data.settings.freesound, searchParams.get("page")).then(result => {
+                            let oAuthConfig = api.getSetting("oAuth");
+                            search(data.searchTerm, oAuthConfig, searchParams.get("page")).then(result => {
                                 data.index = 0;
                                 data.results = result;
                                 data.currentItem = data.results.results[0];
@@ -160,7 +166,8 @@ module.exports = ({Arg0, Else}, api) => {
                             let loadUrl = new URL(data.results.next);
                             let searchParams = new URLSearchParams(loadUrl.searchParams);
                             api.sendView("loading", true);
-                            search(data.searchTerm, data.settings.freesound, searchParams.get("page")).then(result => {
+                            let oAuthConfig = api.getSetting("oAuth");
+                            search(data.searchTerm, oAuthConfig, searchParams.get("page")).then(result => {
                                 data.index = 0;
                                 data.results = result;
                                 api.display("sound_list", data);
