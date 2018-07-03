@@ -3,7 +3,7 @@ var socket = new WebSocket("ws://" + document.location.host);
 
 function showDisconnected() {
     var elem = document.getElementsByClassName("disconnected")[0];
-    elem.style.display = 'none
+    elem.style.display = 'none';
 }
 
 function hideDisconnected() {
