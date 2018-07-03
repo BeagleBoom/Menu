@@ -81,6 +81,7 @@ module.exports = ({Arg0, Else}, api) => {
 
 
             diskspace.check('/dev/volume', function (err, result) {
+                console.log(err, result);
                 api.sendView("DISK_SPACE", result);
             });
         },
