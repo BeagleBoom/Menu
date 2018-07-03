@@ -60,6 +60,7 @@ module.exports = ({Arg0, Else}, api) => {
                     if (err) {
                         newState = false;
                     }
+                    console.log(newState);
                     if (newState != data.internetConnection) {
                         data.internetConnection = newState;
                         api.sendView("INTERNET_CONNECTION", data.internetConnection);
