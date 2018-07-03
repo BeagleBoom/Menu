@@ -185,6 +185,18 @@ Handlebars.registerHelper('limit', function (arr, limit) {
     return arr.slice(0, limit);
 });
 
+Handlebars.registerHelper("debug", function (optionalValue) {
+    console.log("Current Context");
+    console.log("====================");
+    console.log(this);
+
+    if (optionalValue) {
+        console.log("Value");
+        console.log("====================");
+        console.log(optionalValue);
+    }
+});
+
 function loadPartial(name) {
     if (!partials.hasOwnProperty(name)) {
         console.log("Loading partial: " + name);

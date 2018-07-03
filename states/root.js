@@ -81,16 +81,20 @@ module.exports = ({Arg0, Else}, api) => {
             api.display("root", data);
 
             function checkDiskspace() {
-                diskspace.check('/dev/sda1', function (err, result) {
-                    console.log(err, result);
-                    api.sendView("DISK_SPACE", result);
+                diskspace.check('/dev/sda1', function (err, data) {
+                    if (!err) {
+                        api.sendView("DISK_SPACE", {space: Math.round((data.free / data.total) * 100)});
+                    } else {
+                        api.sendView("DISK_SPACE", -1);
+                    }
                 });
             }
 
-            checkDiskspace();
             setInterval(() => {
                 checkDiskspace();
-            }, 1000);
+            }, 10000);
+
+            checkDiskspace();
         },
 
         events: {

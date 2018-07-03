@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="css/circle.css" media="all">
 <style>
     div.ip {
         height: 215px;
@@ -51,7 +52,37 @@
             visibility: hidden;
         }
     }
+
+    #space {
+        position: absolute;
+        top: 16px;
+        left: 2px;
+        display: none;
+        width: 88px;
+        text-align: center;
+        color: #f16f00;
+    }
+
+    .c100 > span:after {
+        background-color: black;
+    }
+
+    #diskspaceValue {
+        color: #f16f00;
+    }
 </style>
+
+<div id="space">
+    Free Disk Space:
+    <div id="spaceCircle" class="c100 small green" style="margin-top: 9px;">
+        <span id="diskspaceValue"></span>
+        <div class="slice">
+            <div class="bar"></div>
+            <div class="fill"></div>
+        </div>
+    </div>
+</div>
+
 <div id="ips">
     {{#each ips}}
     <div class="ip" id="ip{{inc @index}}">
