@@ -7,7 +7,13 @@ module.exports = (api) => {
         .filter(f => f.endsWith(".js"))
         .filter(f => f !== "index.js")
         .map(f => [f.slice(0, -3), path.join(__dirname, f)])
-        .map(([name, p]) => [name, require(p)(helper, api)])
+        .map(([name, p]) => {
+            let now = Date.now();
+            console.log(`Loading ${name}...`);
+            let out = [name, require(p)(helper, api)];
+            console.log(`Loaded ${name}, took ${Date.now() - now} ms`);
+            return out;
+        })
         .map(([name, p]) => [name, Object.assign({data: {}}, p)])
         .map(([name, p]) => {
             if (name !== "_default") {
