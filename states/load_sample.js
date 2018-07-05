@@ -9,7 +9,7 @@ let stopAudio = () => {
 
 const startAudio = (file) => {
     stopAudio();
-    let audio = spawn(path.join(__dirname, "..", "..", "audio", "BeagleAudio"), [3, file.replace(/ /g, "\\ ")]);
+    let audio = spawn(path.join(__dirname, "..", "..", "audio", "BeagleAudio"), [3, file]);
     stopAudio = () => audio.kill();
 };
 
