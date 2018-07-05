@@ -138,7 +138,9 @@ module.exports = ({Arg0, Else}, api) => {
                 [Arg0("A"), [
                     (api, data, event) => {
                         data.showData = false;
-                        api.pushState("load_sample", {item: data.currentItem, settings: data.settings, old_data: data});
+                        console.log("Current Item:" + data.currentItem);
+                        api.pushState("preload_audio", {freesound_soundId: data.currentItem, old_data: data});
+                        //api.pushState("load_sample", {item: data.currentItem, settings: data.settings, old_data: data});
                     }
                 ]],
                 [Arg0("C"), [
