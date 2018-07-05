@@ -9,7 +9,7 @@ let stopAudio = () => {
 
 const startAudio = (file) => {
     stopAudio();
-    let audio = spawn(path.join(__dirname, "..", "..", "audio", "BeagleAudio"), [3, `"${file}"`]);
+    let audio = spawn(path.join(__dirname, "..", "..", "audio", "BeagleAudio"), [3, `"${file}"`],{shell:true});
     audio.stdout.on('data', (data) => {
       console.log(data.toString());
     });
