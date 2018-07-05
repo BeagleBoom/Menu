@@ -34,5 +34,5 @@ input.on('message', function (deltaTime, message) {
     console.log(eventPackage);
     send("ADC_VALUES", eventPackage);
 });
-input.openPort(0);
+input.openPort(1);
 
