@@ -36,6 +36,7 @@ const open = (port, name) => {
         ];
         send("ADC_VALUES", eventPackage);
     });
+    channel.openPort(port);
 };
 
 
