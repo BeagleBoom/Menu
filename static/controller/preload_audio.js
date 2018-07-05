@@ -1,4 +1,22 @@
 var progressbarIntervalId = -1;
+var currentWidth = 0;
+
+function setProgress(value) {
+    var elem = document.getElementById("progressbar");
+    if(progressbarIntervalId != -1) {
+        clearInterval(progressbarIntervalId);
+    }
+
+    progressbarIntervalId = setInterval(frame, 10);
+    function frame() {
+        if (currentWidth >= value * 100) {
+            clearInterval(progressbarIntervalId);
+        } else {
+            currentWidth++;
+            elem.style.width = currentWidth + '%';
+        }
+    }
+}
 
 function $preload_audio() {
     return function () {
@@ -9,23 +27,11 @@ function $preload_audio() {
             onEvent: function (event, data) {
                 switch (event) {
                     case "progress":
-                        var elem = document.getElementById("progressbar");
-                        var width = 1;
+                        
                         console.log("New Progress: " + JSON.stringify(data));
-
-                        if(progressbarIntervalId != -1) {
-                            clearInterval(progressbarIntervalId);
-                        }
-
-                        progressbarIntervalId = setInterval(frame, 10);
-                        function frame() {
-                            if (width >= data) {
-                                clearInterval(progressbarIntervalId);
-                            } else {
-                                width++;
-                                elem.style.width = width + '%';
-                            }
-                        }
+                        
+                        setProgress(data.percent);
+                        
                         
                         break;
                     case "error":
@@ -35,8 +41,9 @@ function $preload_audio() {
                         console.log("download begin");
                         break;
                     case "download_finished":
-                        var elem = document.getElementById("progressbar");
+                        var elem = document.getElementById("title");
                         elem.innerText = "Download finished";
+                        setProgress(1);
                         console.log("download finished");
                         break;
                     default:
