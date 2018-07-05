@@ -91,6 +91,10 @@
     #info-template {
         display: none
     }
+
+    div.playing {
+        display: none;
+    }
 </style>
 
 <span class="count">{{count}}</span>
@@ -111,6 +115,7 @@
         </div>
         <div class="samplerate">{{samplerate}}</div>
         <div class="star">{{avg_rating}} <i class="fa fa-star"></i></div>
+        <div class="playing"><i class="fa fa-play"></i></div>
     </li>
     {{/each}}
 </ul>

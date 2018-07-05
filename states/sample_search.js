@@ -1,9 +1,13 @@
-let request = require('then-request');
-let querystring = require("querystring");
+const request = require('then-request');
+const querystring = require("querystring");
+const MPlayer = require('mplayer');
+const player = new MPlayer();
+player.volume(100);
+
 let {URL, URLSearchParams} = require("url");
 
 const search = (text, oAuthSettings, startPage = 1) => {
-    
+
     let oAuth = {
         token: {
             access_token: oAuthSettings.access_token,
@@ -50,6 +54,7 @@ const search = (text, oAuthSettings, startPage = 1) => {
 
 
 module.exports = ({Arg0, Else}, api) => {
+
     return {
         name: "sample_search",
         title: "Search Sample",
@@ -67,8 +72,8 @@ module.exports = ({Arg0, Else}, api) => {
             "D": "Page >>"
         },
         resume: (name, returnData, data) => {
-            if(name === "auth_freesound") {
-                if(typeof(returnData) === "object" && Object.keys(returnData).length > 0) {
+            if (name === "auth_freesound") {
+                if (typeof(returnData) === "object" && Object.keys(returnData).length > 0) {
                     api.pushState("_keyboard", {text: data.searchTerm});
                 } else {
                     api.popState(null);
@@ -84,7 +89,7 @@ module.exports = ({Arg0, Else}, api) => {
                 api.sendView("loading", true);
 
                 let oAuthConfig = api.getSetting("oAuth");
-                search(returnData,  oAuthConfig).then(result => {
+                search(returnData, oAuthConfig).then(result => {
                     data.searchTerm = returnData;
                     data.results = result;
                     data.currentItem = result.results[0];
@@ -102,7 +107,7 @@ module.exports = ({Arg0, Else}, api) => {
         }, start: (data) => {
             let freesound = api.getSetting("freesound");
             data.freesound = freesound;
-            api.pushState("auth_freesound",  data);
+            api.pushState("auth_freesound", data);
         },
         events: {
             "ROTARY_RIGHT": [
@@ -189,13 +194,23 @@ module.exports = ({Arg0, Else}, api) => {
                         api.sendView("info", data);
                     }
                 ]],
-                [Arg0("PLAY"), [
+                [Arg0("PLAY_RECORD"), [
                     (api, data, event) => {
-                        api.sendView("play", data.currentItem);
+                        player.once('start', () => {
+                            api.sendView("play");
+                        });
+                        player.once('stop', () => {
+                            api.sendView("stop");
+                        });
+
+                        player.volume(100);
+                        let filename = data.currentItem.preview.replace("https://", "http://");
+                        player.openFile(filename);
                     }
                 ]],
-                [Arg0("STOP"), [
+                [Arg0("STOP_CLEAR"), [
                     (api, data, event) => {
+                        player.stop();
                         api.sendView("stop");
                     }
                 ]]

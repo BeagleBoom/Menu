@@ -18,7 +18,6 @@ function $midi() {
                 setIndex(data.selectedIndex, "selected");
             },
             onEvent: function (event, data) {
-                console.log(data, event);
                 switch (event) {
                     case "scroll":
                         setIndex(data, "active");
