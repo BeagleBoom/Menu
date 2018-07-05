@@ -5,8 +5,6 @@ a	s	d	f	g	h	j	k	l	space
 z	x	c	v	b	n	m	-	_	+
 `.split("\n").filter(l => l.length > 0).map(l => l.split("\t"));
 
-console.log(alphabet);
-
 module.exports = ({Arg0, Else}, api) => {
     return {
         name: "_keyboard",

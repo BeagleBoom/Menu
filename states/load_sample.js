@@ -3,6 +3,16 @@ const fs = require("fs");
 const legacy_request = require('request');
 const progress = require('request-progress');
 
+const {spawn} = require("child_process");
+let stopAudio = () => {
+};
+
+const startAudio = (file) => {
+    stopAudio();
+    let audio = spawn(path.join(__dirname, "..", "audio", "BeagleAudio"), [3, file]);
+    stopAudio = () => audio.kill();
+};
+
 module.exports = ({Arg0, Else}, api) => {
     const store = {
         requests: {}
@@ -69,6 +79,8 @@ module.exports = ({Arg0, Else}, api) => {
             adsr.attack, adsr.decay, adsr.sustain, adsr.release
         ]);
         api.sendView("submode", {mode: "adsr", data: adsr});
+        api.file.settings.set("adsr", adsr);
+
     }
 
     let scope = {
@@ -99,12 +111,17 @@ module.exports = ({Arg0, Else}, api) => {
         },
         start(data) {
             api.display("load_sample", data);
-            let filename = data.item.hasOwnProperty("filename") ? data.item.filename : "tmp";
-            data.item.filename = path.join(data.settings.savepath, filename + ".wav");
-            if (!fs.existsSync(data.item.filename)) {
-                downloadFile(data.item, data.settings.freesound);
-            }
-            showWaveForm(data.item.filename);
+
+            let filename = data.file;
+            api.file.load(filename);
+            data.params.adsr = api.file.settings.get("adsr", {
+                attack: 500,
+                decay: 500,
+                sustain: 0.8,
+                release: 500
+            });
+            startAudio(filename);
+            //showWaveForm(data.item.filename);
         },
         events: {
             "ROTARY_LEFT": [

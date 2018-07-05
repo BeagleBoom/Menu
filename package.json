@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "diskspace": "^2.0.0",
+    "hat": "0.0.3",
     "fluent-ffmpeg": "^2.1.2",
     "midi": "^0.9.5",
     "mplayer": "^2.1.0",

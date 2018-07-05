@@ -101,7 +101,7 @@ module.exports = ({Arg0, Else}, api) => {
             "BUTTON_UP": [
                 [Arg0("A"), [
                     (api, data, event) => {
-                        api.pushState("load_sample", data);
+                        api.pushState("load_sample", {file:"/Users/torbenhartmann/Documents/Kunden/FH/beagleBoom/menu/files/Vintage - Techno house loop -110bp_1530791539782.wav"});
                     }
                 ]],
                 [Arg0("C"), [
