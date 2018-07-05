@@ -4,7 +4,7 @@ const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
 
 
-function convertToWave(sourceFilePath,destinationFilePath, api) {
+function convertToWave(sourceFilePath,destinationFilePath, api, delelteSourceFileAfterFinished) {
 
     api.sendView("convert_begin");
 
@@ -22,6 +22,9 @@ function convertToWave(sourceFilePath,destinationFilePath, api) {
         .on('end', () => {
             api.sendView("convert_finished");
             console.log('Processing finished !');
+            if(delelteSourceFileAfterFinished) {
+                fs.unlinkSync(sourceFilePath);
+            }
         })
         .save(destinationFilePath);//path where you want to save your file
 }
@@ -47,7 +50,8 @@ function downloadFreesoundFile(soundId, filePath, api) {
     }).pipe(fs.createWriteStream(filePath))
         .on('finish', function () { // Saving Finished
             api.sendView("download_finished", filePath);
-            convertToWave(filePath, "/tmp/out.wave", api);
+            let convertDestination = api.getSetting("defaultAudioFile");
+            convertToWave(filePath, convertDestination, api, true);
         }).on('error', function (err) { // Saving Failed
             err.soundId = soundId;
             api.sendView("error", err);
@@ -70,8 +74,9 @@ module.exports = ({ Arg0, Else }, api) => {
             if (data.freesound_soundId !== undefined) {
                 // Download File from the Internet
                 let defaultDownloadFile = api.getSetting("defaultDownloadFile");
-                downloadFreesoundFile(data.freesound_soundId.id, "/tmp/test.mp3", api);
-                api.display("preload_audio", { title: data.freesound_soundId.title });
+                let downloadFile = api.getSetting("tmpDownloadFile");
+                downloadFreesoundFile(data.freesound_soundId.id, downloadFile, api);
+                api.display("preload_audio", { title: data.freesound_soundId.name });
 
             }
 

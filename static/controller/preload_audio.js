@@ -31,7 +31,8 @@ function $preload_audio() {
     return function () {
         return {
             start: function (data) {
-
+                var elem = document.getElementById("description");
+                elem.innerText = data.title;
             },
             onEvent: function (event, data) {
                 switch (event) {
@@ -44,6 +45,7 @@ function $preload_audio() {
                         break;
                     case "download_begin":
                         console.log("download begin");
+                        
                         break;
                     case "download_finished":
                         var elem = document.getElementById("title");
