@@ -30,7 +30,7 @@ module.exports = ({Arg0, Else}, api) => {
         },
         events: {
             "BUTTON_DOWN": [
-                [Arg0("PLAY"), [
+                [Arg0("PLAY_RECORD"), [
                     (api, data, event) => {
                         console.log("Playing sound ", this.data.selectedItem);
                         switch (this.data.origin) {
@@ -46,7 +46,7 @@ module.exports = ({Arg0, Else}, api) => {
                         }
                     }
                 ]],
-                [Arg0("STOP"), [
+                [Arg0("STOP_CLEAR"), [
                     (api, data, event) => {
                         player.stop();
                         api.send("STOP_PREVIEW");

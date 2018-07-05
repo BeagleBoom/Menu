@@ -49,8 +49,6 @@ function $sound_list() {
         }
 
         function setIndex(newIndex) {
-            // todo: show play status
-
             currentId = results.currentItem.id;
             if (document.getElementsByClassName("active").length > 0) {
                 currentId = document.getElementsByClassName("active")[0].id;
@@ -122,7 +120,6 @@ function $sound_list() {
             },
             onEvent: function (event, data) {
                 hideInfo(event);
-                console.log(data, event);
                 switch (event) {
                     case "scrollUp":
                         index = data.index;
@@ -172,6 +169,17 @@ function $sound_list() {
                     case "currentItem":
                         results.currentItem = data;
                         showInfo(data);
+                        break;
+                    case "play":
+                        document.querySelectorAll(".playing").forEach(function (element) {
+                            element.style.display = "none";
+                        });
+                        document.querySelector("li.active > .playing").style.display = "block";
+                        break;
+                    case "stop":
+                        document.querySelectorAll(".playing").forEach(function (element) {
+                            element.style.display = "none";
+                        });
                         break;
                     default:
                         console.log("Unkown event: ", event, data);
