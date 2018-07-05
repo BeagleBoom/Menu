@@ -203,7 +203,6 @@ module.exports = ({Arg0, Else}, api) => {
                             api.sendView("stop");
                         });
 
-                        player.volume(100);
                         let filename = data.currentItem.preview.replace("https://", "http://");
                         player.openFile(filename);
                     }
