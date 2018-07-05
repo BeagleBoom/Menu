@@ -32,6 +32,7 @@ function $preload_audio() {
         return {
             start: function (data) {
                 var elem = document.getElementById("description");
+                console.log(data);
                 elem.innerText = data.title;
             },
             onEvent: function (event, data) {

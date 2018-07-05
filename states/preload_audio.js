@@ -83,22 +83,6 @@ module.exports = ({ Arg0, Else }, api) => {
 
         },
         events: {
-            "BUTTON_UP": [
-                [Arg0("BACK"),
-                [(api, data, event) => {
-                    console.log("Stopping recording and returning to previous state...");
-                    api.send("RECORD_STOP", "");
-                    api.send("RECORD_CLEAR", "");
-                    api.popState();
-                }]
-                ],
-                [Arg0("A"), [
-                    (api) => {
-                        api.send("RECORD_CLEAR", "");
-                        this.data.recording = false;
-                    }
-                ]]
-            ]
         }
     }
 };
