@@ -101,7 +101,7 @@ module.exports = ({Arg0, Else}, api) => {
             "BUTTON_UP": [
                 [Arg0("A"), [
                     (api, data, event) => {
-                        api.pushState("load_sample", {file:"/root/beagleBoom/menu/saved/Single Bark_153079470372.wav"});
+                        api.pushState("load_sample", {file:"/root/BeagleBoom/menu/saved/Single Bark_153079470372.wav"});
                     }
                 ]],
                 [Arg0("C"), [
