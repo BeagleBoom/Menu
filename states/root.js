@@ -38,8 +38,8 @@ module.exports = ({Arg0, Else}, api) => {
         captions: {
             "A": "Load",
             "B": "Midi",
-            "C": "Search",
-            "D": "Record"
+            "C": "Search"
+            //,            "D": "Record"
         },
 
         data: {
