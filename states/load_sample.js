@@ -9,9 +9,9 @@ let stopAudio = () => {
 
 const startAudio = (file) => {
     stopAudio();
-    let audio = spawn(path.join(__dirname, "..", "..", "audio", "BeagleAudio"), [3, `"${file}"`],{shell:true});
+    let audio = spawn(path.join(__dirname, "..", "..", "audio", "BeagleAudio"), [3, `"${file}"`], {shell: true});
     audio.stdout.on('data', (data) => {
-      console.log(data.toString());
+        console.log(data.toString());
     });
 
     stopAudio = () => audio.kill();
@@ -118,6 +118,9 @@ module.exports = ({Arg0, Else}, api) => {
 
             let filename = data.file;
             api.file.load(filename);
+            if (data.hasOwnProperty("meta")) {
+                api.file.settings.set("meta", data.meta);
+            }
             data.params.adsr = api.file.settings.get("adsr", {
                 attack: 500,
                 decay: 500,

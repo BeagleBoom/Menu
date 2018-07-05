@@ -80,7 +80,7 @@ module.exports = ({Arg0, Else}, api) => {
                 let defaultDownloadFile = api.getSetting("defaultDownloadFile");
                 let downloadFile = api.getSetting("tmpDownloadFile");
                 downloadFreesoundFile(data.freesound_soundId.id, downloadFile, api, data.freesound_soundId)
-                    .then(file => api.pushState("load_sample", {file}));
+                    .then(file => api.pushState("load_sample", {file,meta:data.freesound_soundId}));
                 api.display("preload_audio", {title: data.freesound_soundId.name});
 
             }
