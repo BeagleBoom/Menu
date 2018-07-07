@@ -27,7 +27,7 @@ module.exports = ({Arg0, Else}, api) => {
         //    B: "Upload",
         //    D: "Playback"
         R1: "ADSR",
-        R2: "Loop"
+        // R2: "Loop"
     };
 
     function showWaveForm(filename) {
@@ -100,13 +100,7 @@ module.exports = ({Arg0, Else}, api) => {
             "BUTTON_UP": [
                 [Arg0("BACK"), [
                     function (api, data, event) {
-                        if (data.submode === "") {
-                            api.popState(data.old_data);
-                            return;
-                        }
-                        data.submode = "";
-                        api.sendCaptions(data.default_captions);
-                        api.sendView("submode", {mode: data.submode, data: {}});
+                        api.popState(data.old_data);
                     }
                 ]],
                 [Arg0("R1"), [
@@ -130,6 +124,7 @@ module.exports = ({Arg0, Else}, api) => {
                 ]],
                 [Arg0("D"), [
                     (api, data, event) => {
+                        stopAudio();
                         api.pushState("playback", data);
                     }
                 ]]
