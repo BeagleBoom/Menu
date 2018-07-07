@@ -123,8 +123,8 @@ function $load_sample() {
                         draw();
                         break;
                     case "waveform":
-                        console.log(sound);
                         sound = data.sound;
+                        console.log(sound);
                         draw();
                         break;
                     default:
