@@ -38,55 +38,6 @@ module.exports = ({Arg0, Else}, api) => {
         });
     }
 
-    function downloadFile(item, freesound) {
-        let soundId = item.id;
-        let oAuth = {
-            token: {
-                access_token: freesound.token,
-                token_type: "Bearer"
-            }
-        };
-
-        // Request Parameters
-        let headers = {Authorization: oAuth.token.token_type + " " + oAuth.token.access_token};
-        let uri = "https://www.freesound.org/apiv2/sounds/" + item.id + "/download/";
-
-        store.requests[soundId] = legacy_request(uri, {headers: headers});
-        progress(store.requests[soundId], {}).on('progress', function (state) {
-            state.soundId = soundId;
-            api.sendView("download_state", state);
-        }).on('error', function (err) {
-            err.soundId = soundId;
-            err.type = "download";
-
-            if (err.statusCode === 401) {
-                store.isLoggedIn = false;
-            }
-
-            // Removing Request from Request List
-            delete store.requests[soundId];
-        }).on('end', function () {
-            // Removing Request from Request List
-            delete store.requests[soundId];
-        }).pipe(fs.createWriteStream(item.filename))
-            .on('finish', function () {
-                api.sendView("download_finished");
-            }).on('error', function (err) {
-            api.sendView("download_error", err);
-            err.soundId = soundId;
-        });
-    }
-
-
-    function sendADSR(adsr) {
-        api.send("ADSR", [
-            adsr.attack, adsr.decay, adsr.sustain, adsr.release
-        ]);
-        api.sendView("submode", {mode: "adsr", data: adsr});
-        api.file.settings.set("adsr", adsr);
-
-    }
-
     let scope = {
         name: "load_sample",
         captions: captions,
@@ -95,7 +46,6 @@ module.exports = ({Arg0, Else}, api) => {
             default_captions: captions,
             item: {},
             settings: {},
-            submode: "",
             params: {
                 adsr: {
                     attack: 0,
@@ -121,69 +71,11 @@ module.exports = ({Arg0, Else}, api) => {
             if (data.hasOwnProperty("meta")) {
                 api.file.settings.set("meta", data.meta);
             }
-            data.params.adsr = api.file.settings.get("adsr", {
-                attack: 500,
-                decay: 500,
-                sustain: 0.8,
-                release: 500
-            });
             startAudio(filename);
             //showWaveForm(data.item.filename);
         },
         events: {
             "ROTARY_LEFT": [
-                [Arg0("R1"), [
-                    (api, data, event) => {
-                        switch (data.submode) {
-                            case "adsr":
-                                data.params.adsr.attack -= 100;
-                                if (data.params.adsr.attack < 0)
-                                    data.params.adsr.attack = 0;
-                            default:
-                                break;
-                        }
-                        sendADSR(data.params.adsr);
-                    }
-                ]],
-                [Arg0("R2"), [
-                    (api, data, event) => {
-                        switch (data.submode) {
-                            case "adsr":
-                                data.params.adsr.decay -= 100;
-                                if (data.params.adsr.decay < 1)
-                                    data.params.adsr.decay = 1;
-                            default:
-                                break;
-                        }
-                        sendADSR(data.params.adsr);
-                    }
-                ]],
-                [Arg0("R3"), [
-                    (api, data, event) => {
-                        switch (data.submode) {
-                            case "adsr":
-                                data.params.adsr.sustain -= 0.1;
-                                if (data.params.adsr.sustain < 0)
-                                    data.params.adsr.sustain = 0;
-                            default:
-                                break;
-                        }
-                        sendADSR(data.params.adsr);
-                    }
-                ]], [Arg0("R4"), [
-                    (api, data, event) => {
-                        switch (data.submode) {
-                            case "adsr":
-                                data.params.adsr.release -= 100;
-                                if (data.params.adsr.release < 0)
-                                    data.params.adsr.release = 0;
-                            default:
-                                break;
-                        }
-                        sendADSR(data.params.adsr);
-                    }
-                ]],
-
                 [Arg0("Z1"), [
                     (api, data, event) => {
                         api.sendView("zoom_out", {});
@@ -195,56 +87,6 @@ module.exports = ({Arg0, Else}, api) => {
                     }
                 ]]],
             "ROTARY_RIGHT": [
-                [Arg0("R1"), [
-                    (api, data, event) => {
-                        switch (data.submode) {
-                            case "adsr":
-                                data.params.adsr.attack += 100;
-                            default:
-                                break;
-                        }
-                        sendADSR(data.params.adsr);
-                    }
-                ]], [Arg0("R2"), [
-                    (api, data, event) => {
-                        switch (data.submode) {
-                            case "adsr":
-                                data.params.adsr.decay += 100;
-                            default:
-                                break;
-                        }
-                        sendADSR(data.params.adsr);
-                    }
-                ]],
-                [Arg0("R3"), [
-                    (api, data, event) => {
-                        switch (data.submode) {
-                            case "adsr":
-                                data.params.adsr.sustain += 0.1;
-                                if (data.params.adsr.sustain < 0.1) {
-                                    data.params.adsr.sustain = 0.1;
-                                }
-
-                                if (data.params.adsr.sustain > 1) {
-                                    data.params.adsr.sustain = 1;
-                                }
-
-                            default:
-                                break;
-                        }
-                        sendADSR(data.params.adsr);
-                    }
-                ]], [Arg0("R4"), [
-                    (api, data, event) => {
-                        switch (data.submode) {
-                            case "adsr":
-                                data.params.adsr.release += 100;
-                            default:
-                                break;
-                        }
-                        sendADSR(data.params.adsr);
-                    }
-                ]],
                 [Arg0("Z1"), [
                     (api, data, event) => {
                         api.sendView("zoom_in", {});
@@ -269,15 +111,7 @@ module.exports = ({Arg0, Else}, api) => {
                 ]],
                 [Arg0("R1"), [
                     (api, data, event) => {
-                        data.submode = "adsr";
-                        api.sendCaptions({
-                            R1: "Attack",
-                            R2: "Decay",
-                            R3: "Sustain",
-                            R4: "Release"
-                        });
-                        sendADSR(data.params.adsr);
-
+                        api.pushState("adsr", data);
                     }
                 ]],
                 [Arg0("R2"), [

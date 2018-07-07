@@ -8,7 +8,6 @@ const ffmpeg = require('fluent-ffmpeg');
 function convertToWave(sourceFilePath, destinationFilePath, api, deleteSourceFileAfterFinished) {
 
     api.sendView("convert_begin");
-
     return new Promise((resolve, reject) => ffmpeg(sourceFilePath)
         .toFormat('wav')
         .on('error', (err) => {

@@ -1,0 +1,35 @@
+<style>
+    #attack {
+
+    }
+
+    #decay {
+
+    }
+
+    #sustain {
+
+    }
+
+    #release {
+
+    }
+
+    #buttons {
+        bottom: 4px;
+        position: absolute;
+        width: 100%;
+    }
+
+    #buttons span {
+        width: 23%;
+        text-align: center;
+        display: inline-block;
+    }
+</style>
+<div id="buttons">
+    <span id="attack">{{params.adsr.attack}}</span>
+    <span id="decay">{{params.adsr.decay}}</span>
+    <span id="sustain">{{params.adsr.sustain}}</span>
+    <span id="release">{{params.adsr.release}}</span>
+</div>

@@ -1,3 +1,4 @@
+const path = require("path");
 module.exports = ({Arg0, Else}, api) => {
     function getIPs() {
         let os = require('os');
@@ -101,7 +102,7 @@ module.exports = ({Arg0, Else}, api) => {
             "BUTTON_UP": [
                 [Arg0("A"), [
                     (api, data, event) => {
-                        api.pushState("load_sample", {file:"/root/BeagleBoom/menu/saved/Single Bark_153079470372.wav"});
+                        api.pushState("load_sample", {file: path.join(__dirname, "..", "saved", "Beagle_Bark_Interior_Hard_Walls 08_1530940354107.wav")});
                     }
                 ]],
                 [Arg0("C"), [
