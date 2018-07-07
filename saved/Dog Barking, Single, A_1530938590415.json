@@ -1,0 +1,47 @@
+{
+  "presets": [],
+  "settings": {
+    "adsr": {
+      "attack": 500,
+      "decay": 500,
+      "sustain": 0.8,
+      "release": 500
+    }
+  },
+  "meta": {
+    "id": 406085,
+    "url": "https://freesound.org/people/InspectorJ/sounds/406085/",
+    "name": "Dog Barking, Single, A.wav",
+    "tags": [
+      "barking",
+      "bark",
+      "Bark",
+      "Dog",
+      "dog",
+      "growling",
+      "Barking",
+      "Growling"
+    ],
+    "description": "My neighbour's dog never stops... so I finally decided to get something out of it - here is a snippet. The barks have a natural echo from the surrounding countryside, and some nearby birds were chirping. I have applied occasional EQ to reduce the bass frequencies. A little bit of handling noise.\n\nIf any of these sounds have been of help, and you are feeling charitable, please do consider<b> <a href=\"http://www.freesound.org/donations/donate/\" rel=\"nofollow\">donating to Freesound</a> </b>to help keep the site running (a link is also on the home page). Any donations are greatly appreciated! And for more awesome sounds, do please <b><a href=\"https://www.jshaw.co.uk/libraries\" rel=\"nofollow\">check out my sound libraries</a></b>.\n\nPlease comment on where you intend to use the sound, and feel free to post a link to the work where you used it if you want (I enjoy watching/listening to anything you create!)\n\nYou don't have to worry about crediting this sound if you are using it for non-commercial projects unless you want to (e.g. educational or non-profit activities), but <b>if you use the sound for a commercial project you must credit the sound</b>. If you would prefer to not have to give attribution for commercial projects, then take a look at the <b><a href=\"https://www.jshaw.co.uk/inspectorj-freesound-library\" rel=\"nofollow\">attribution-free license</a></b>.\n\nAn example of how you might credit is by putting this in the description/credits:\n\"Dog Barking, Single, A.wav\" by InspectorJ (<a href=\"http://www.jshaw.co.uk\" rel=\"nofollow\">www.jshaw.co.uk</a>) of <a href=\"http://Freesound.org\" rel=\"nofollow\">Freesound.org</a>\n\nThe sound was recorded using a \"H1 Zoom recorder\" on 25th October 2017.\n\nNote: Audio quality is always better when downloaded.",
+    "license": "http://creativecommons.org/licenses/by/3.0/",
+    "type": "wav",
+    "channels": 2,
+    "filesize": 17640398,
+    "bitrate": 2067,
+    "duration": "01:06.67",
+    "samplerate": "44 kb/s",
+    "username": "InspectorJ",
+    "pack": null,
+    "previews": {
+      "preview-lq-ogg": "https://freesound.org/data/previews/406/406085_5121236-lq.ogg",
+      "preview-lq-mp3": "https://freesound.org/data/previews/406/406085_5121236-lq.mp3",
+      "preview-hq-ogg": "https://freesound.org/data/previews/406/406085_5121236-hq.ogg",
+      "preview-hq-mp3": "https://freesound.org/data/previews/406/406085_5121236-hq.mp3"
+    },
+    "num_downloads": 2657,
+    "avg_rating": 4.25,
+    "num_ratings": 8,
+    "mono": false,
+    "preview": "https://freesound.org/data/previews/406/406085_5121236-hq.mp3"
+  }
+}
