@@ -127,19 +127,6 @@ function $load_sample() {
                         sound = data.sound;
                         draw();
                         break;
-                    case "submode":
-                        submode.mode = data.mode;
-
-                        if (submode.mode === "") {
-                            submode.values = {};
-                            hideSubmode();
-                            break;
-                        }
-
-                        submode.values = data.data;
-                        showSubmode();
-
-                        break;
                     default:
                         console.log("unknown event:", event, data);
 

@@ -1,18 +1,6 @@
 <style>
-    #attack {
-
-    }
-
-    #decay {
-
-    }
-
-    #sustain {
-
-    }
-
-    #release {
-
+    #myCanvas {
+        position: absolute;
     }
 
     #buttons {
@@ -27,6 +15,8 @@
         display: inline-block;
     }
 </style>
+<canvas id="myCanvas" width="320" height="160"></canvas>
+
 <div id="buttons">
     <span id="attack">{{params.adsr.attack}}</span>
     <span id="decay">{{params.adsr.decay}}</span>

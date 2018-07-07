@@ -1,0 +1,42 @@
+{
+  "presets": [],
+  "settings": {
+    "adsr": {
+      "attack": 2400,
+      "decay": 3100,
+      "sustain": 0.4,
+      "release": 2200
+    }
+  },
+  "meta": {
+    "id": 325481,
+    "url": "https://freesound.org/people/n_audioman/sounds/325481/",
+    "name": "Beagle_Bark_Interior_Hard_Walls 08.wav",
+    "tags": [
+      "Beagle",
+      "Bark",
+      "Dog"
+    ],
+    "description": "This is a recording of a Beagle making a Beagle bark.",
+    "license": "http://creativecommons.org/licenses/by/3.0/",
+    "type": "wav",
+    "channels": 2,
+    "filesize": 144122,
+    "bitrate": 1561,
+    "duration": "00:00.73",
+    "samplerate": "48 kb/s",
+    "username": "n_audioman",
+    "pack": "https://freesound.org/apiv2/packs/18276/",
+    "previews": {
+      "preview-lq-ogg": "https://freesound.org/data/previews/325/325481_3554699-lq.ogg",
+      "preview-lq-mp3": "https://freesound.org/data/previews/325/325481_3554699-lq.mp3",
+      "preview-hq-ogg": "https://freesound.org/data/previews/325/325481_3554699-hq.ogg",
+      "preview-hq-mp3": "https://freesound.org/data/previews/325/325481_3554699-hq.mp3"
+    },
+    "num_downloads": 131,
+    "avg_rating": 5,
+    "num_ratings": 1,
+    "mono": false,
+    "preview": "https://freesound.org/data/previews/325/325481_3554699-hq.mp3"
+  }
+}
