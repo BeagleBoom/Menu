@@ -81,10 +81,12 @@ module.exports = ({Arg0, Else}, api) => {
             }
 
 
-            if (name === "_keyboard" || name === "preload_audio") {
+            if (name === "_keyboard") {
                 if (returnData === null || Object.keys(returnData).length == 0) {
                     return api.popState();
                 }
+               
+
                 api.display("sound_list", []);
                 api.sendView("loading", true);
 
@@ -98,7 +100,11 @@ module.exports = ({Arg0, Else}, api) => {
                 });
             }
 
-            if (name === "load_sample") {
+            if (name === "load_sample" || name === "preload_audio") {
+                if(name === "preload_audio") {
+                    returnData = returnData.old_data;
+                }
+                
                 api.display("sound_list", data);
                 api.sendView("currentItem", data.currentItem);
                 api.sendView("index", data.index);

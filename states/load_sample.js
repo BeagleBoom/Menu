@@ -118,7 +118,7 @@ module.exports = ({Arg0, Else}, api) => {
                 [Arg0("BACK"), [
                     function (api, data, event) {
                         stopAudio();
-                        api.popState(data.old_data);
+                        api.popState(data);
                     }
                 ]],
                 [Arg0("R1"), [
