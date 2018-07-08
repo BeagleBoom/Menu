@@ -91,6 +91,28 @@ module.exports = ({ Arg0, Else }, api) => {
                         api.sendView("info", data);
                     }
                 ]],
+                [Arg0("R3"), [
+                    (api, data, event) => {
+                        const step = 3;
+                        let nextIndex = data.index;
+                        if(0 <= nextIndex - step){
+                            nextIndex = nextIndex - step;
+                            api.sendView("index", nextIndex);
+                            data.index = nextIndex; 
+                        }
+                    }
+                ]],
+                [Arg0("R4"), [
+                    (api, data, event) => {
+                        const step = 3;
+                        let nextIndex = data.index;
+                        if(data.results.replace.length > nextIndex + step){
+                            nextIndex = nextIndex + step;
+                            api.sendView("index", nextIndex);
+                            data.index = nextIndex; 
+                        }
+                    }
+                ]],
                 [Arg0("PLAY_RECORD"), [
                     (api, data, event) => {
                         player.once('start', () => {
