@@ -72,7 +72,7 @@ function downloadFreesoundFile(type, soundId, filePath, api, { name }) {
                 let convertDestination = path.join(api.settings.get("audio_path", path.join(__dirname, "..", "saved")), name + ".wav");
                 resolve(convertToWave(filePath, convertDestination, api, true));
             } else {
-                resolve(true);
+                resolve(filePath);
             }
         }).on('error', function (err) { // Saving Failed
             err.soundId = soundId;
