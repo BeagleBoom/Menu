@@ -81,7 +81,7 @@ module.exports = ({Arg0, Else}, api) => {
             }
 
 
-            if (name === "_keyboard") {
+            if (name === "_keyboard" || name === "preload_audio") {
                 if (returnData === null || Object.keys(returnData).length == 0) {
                     return api.popState();
                 }
@@ -144,7 +144,7 @@ module.exports = ({Arg0, Else}, api) => {
                     (api, data, event) => {
                         data.showData = false;
                         console.log("Current Item:" + data.currentItem);
-                        api.pushState("preload_audio", {freesound_soundId: data.currentItem, old_data: data});
+                        api.pushState("preload_audio", {freesound_soundId: data.currentItem, searchTerm: data.searchTerm, old_data: data});
                         //api.pushState("load_sample", {item: data.currentItem, settings: data.settings, old_data: data});
                     }
                 ]],

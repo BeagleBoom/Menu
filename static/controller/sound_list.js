@@ -1,6 +1,9 @@
 function $sound_list() {
     return function () {
         Handlebars.registerHelper('fetch_license', function (license) {
+            if(license === undefined) {
+                return "";
+            }
             license = license.trim();
             var ret = "";
             switch (license) {
@@ -49,6 +52,8 @@ function $sound_list() {
         }
 
         function setIndex(newIndex) {
+            if(results.currentItem == undefined) return;
+            
             currentId = results.currentItem.id;
             if (document.getElementsByClassName("active").length > 0) {
                 currentId = document.getElementsByClassName("active")[0].id;

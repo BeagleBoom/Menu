@@ -102,7 +102,8 @@ module.exports = ({Arg0, Else}, api) => {
             "BUTTON_UP": [
                 [Arg0("A"), [
                     (api, data, event) => {
-                        api.pushState("load_sample", {file: path.join(__dirname, "..", "saved", "Beagle_Bark_Interior_Hard_Walls 08_1530940354107.wav")});
+                        //api.pushState("load_sample", {file: path.join(__dirname, "..", "saved", "Beagle_Bark_Interior_Hard_Walls 08_1530940354107.wav")});
+                        api.pushState("file_explorer");                    
                     }
                 ]],
                 [Arg0("C"), [

@@ -31,61 +31,86 @@ function convertToWave(sourceFilePath, destinationFilePath, api, deleteSourceFil
         .save(destinationFilePath));//path where you want to save your file
 }
 
-function downloadFreesoundFile(soundId, filePath, api, {name}) {
+function downloadFreesoundFile(type, soundId, filePath, api, { name }) {
     let oAuth = api.getSetting("oAuth");
 
-    let headers = {Authorization: "Bearer" + " " + oAuth.access_token};
+    let headers = { Authorization: "Bearer" + " " + oAuth.access_token };
 
     let uri = "https://freesound.org/apiv2/sounds/" + soundId + "/download/";
 
-    let request = legacy_request(uri, {headers: headers});
+    let request = legacy_request(uri, { headers: headers });
+
+    let directory = path.dirname(filePath);
+    if (!fs.existsSync(directory)) {
+        fs.mkdirSync(directory);
+    }
+
+    let needToBeConverted = true;
+    if (type === "wav" || type === "wave") {
+        name = name.slice(name, name.lastIndexOf(".")) + "_" + Date.now();
+        filePath = path.join(api.settings.get("audio_path", path.join(__dirname, "..", "saved")), name + ".wav");
+        needToBeConverted = false;
+    }
+
+
+
     return new Promise((resolve, reject) => progress(request, {}).on('progress', function (state) { // File Download Progress
-            api.sendView("progress", state);
-        }).on('error', function (err) { // On Authentication Error
-            err.soundId = soundId;
-            err.type = "download";
+        api.sendView("progress", state);
+    }).on('error', function (err) { // On Authentication Error
+        err.soundId = soundId;
+        err.type = "download";
 
-            api.sendView("error", err);
-            reject(err);
-        }).on('end', function () {  // On Request finished
+        api.sendView("error", err);
+        reject(err);
+    }).on('end', function () {  // On Request finished
 
-        }).pipe(fs.createWriteStream(filePath))
-            .on('finish', function () { // Saving Finished
-                api.sendView("download_finished", filePath);
-                name = name.slice(name, name.lastIndexOf(".")) + "_" + Date.now();
+    }).pipe(fs.createWriteStream(filePath))
+        .on('finish', function () { // Saving Finished
+            api.sendView("download_finished", filePath);
+            name = name.slice(name, name.lastIndexOf(".")) + "_" + Date.now();
+            if (needToBeConverted) {
                 let convertDestination = path.join(api.settings.get("audio_path", path.join(__dirname, "..", "saved")), name + ".wav");
                 resolve(convertToWave(filePath, convertDestination, api, true));
-            }).on('error', function (err) { // Saving Failed
-                err.soundId = soundId;
-                api.sendView("error", err);
-            })
+            } else {
+                resolve(true);
+            }
+        }).on('error', function (err) { // Saving Failed
+            err.soundId = soundId;
+            api.sendView("error", err);
+        })
     );
 };
 
-module.exports = ({Arg0, Else}, api) => {
+module.exports = ({ Arg0, Else }, api) => {
     return {
-        name: "preload audio",
+        name: "preload_audio",
         title: "Audio Preload",
         caption: {
-            "A": "Cancel"
         },
         data: {},
         resume: (name, returnData) => {
-
+            api.popState(returnData);
         },
         start: (data) => {
             if (data.freesound_soundId !== undefined) {
                 // Download File from the Internet
                 let defaultDownloadFile = api.getSetting("defaultDownloadFile");
                 let downloadFile = api.getSetting("tmpDownloadFile");
-                downloadFreesoundFile(data.freesound_soundId.id, downloadFile, api, data.freesound_soundId)
-                    .then(file => api.pushState("load_sample", {file,meta:data.freesound_soundId}));
-                api.display("preload_audio", {title: data.freesound_soundId.name});
+                downloadFreesoundFile(data.freesound_soundId.type, data.freesound_soundId.id, downloadFile, api, data.freesound_soundId)
+                    .then(file => api.pushState("load_sample", { file, meta: data.freesound_soundId }));
+                api.display("preload_audio", { title: data.freesound_soundId.name });
 
             }
 
 
         },
-        events: {}
+        events: {
+            "BUTTON_UP": [
+
+            ],
+            "ROTARY_LEFT": [
+
+            ]
+        }
     }
 };
