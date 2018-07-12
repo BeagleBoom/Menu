@@ -84,7 +84,7 @@ module.exports = ({Arg0, Else}, api) => {
         },
         resume: (name, returnData, data) => {
             api.display("load_sample", data);
-            showWaveForm(data.filename);
+            //showWaveForm(data.filename);
         },
         start(data) {
             api.display("load_sample", data);
