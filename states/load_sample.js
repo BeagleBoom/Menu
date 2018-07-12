@@ -28,6 +28,8 @@ module.exports = ({Arg0, Else}, api) => {
         stopAudio();
         let audio = spawn(path.join(__dirname, "..", "..", "audio", "BeagleAudio"), [3, `"${file}"`], {shell: true});
         audio.stdout.on('data', (data) => {
+            console.log(data);
+
             let tmp = data.toString().replace(/(\r\n\t|\n|\r\t)/gm, "");
 
             if (tmp.indexOf("##WAVE_START##") !== -1) {
