@@ -27,16 +27,26 @@ module.exports = ({Arg0, Else}, api) => {
         waveForm = [];
         stopAudio();
         let audio = spawn(path.join(__dirname, "..", "..", "audio", "BeagleAudio"), [3, `"${file}"`], {shell: true});
+        let buffer = [];
         audio.stdout.on('data', (data) => {
             console.log(data.toString());
 
-            let tmp = data.toString().replace(/(\r\n\t|\n|\r\t)/gm, "");
+            let tmp = data.toString().replace(/(\r|\n|\t)/gm, "");
 
             if (tmp.indexOf("##WAVE_START##") !== -1) {
                 parseWave = true;
+                tmp = tmp.replace("##WAVE_START##", "");
             }
+
             if (tmp.indexOf("##WAVE_END##") !== -1) {
                 parseWave = false;
+
+                waveForm = (buffer.join("") + tmp.split("##WAVE_END##")[0])
+                    .split(" ")
+                    .filter(l => l.length)
+                    , map(l => parseFloat(l))
+
+                ;
 
                 api.send("ADC_START", [], 100);
 
@@ -44,16 +54,10 @@ module.exports = ({Arg0, Else}, api) => {
                     {
                         sound: waveForm
                     });
+                return;
             }
             if (parseWave) {
-                tmp = tmp.replace("##WAVE_START##", "");
-                tmp = tmp.replace("##WAVE_END##", "");
-                let waveData = tmp.split(" ");
-                waveData.forEach((wData) => {
-                    if (wData !== "") {
-                        waveForm.push(parseFloat(wData));
-                    }
-                });
+                buffer.push(data);
             }
         });
 
