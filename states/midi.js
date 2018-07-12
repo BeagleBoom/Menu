@@ -50,7 +50,7 @@ module.exports = ({Arg0, Else}, api) => {
         },
         data: {
             devices: ["Off"],
-            selectedItem: "Off"
+            selectedItem: api.settings.get("midi_device", "Off")
         },
         resume: (name, returnData) => {
 
@@ -74,7 +74,7 @@ module.exports = ({Arg0, Else}, api) => {
 
             initData.selectedIndex = selectedIndex;
             initData.currentIndex = selectedIndex;
-
+            open(initData.selectedIndex - 1, selectedMidiDevice);
             api.display("midi", initData);
         },
         events: {
@@ -85,6 +85,7 @@ module.exports = ({Arg0, Else}, api) => {
                         selectedMidiDevice = data.devices[data.selectedIndex];
                         api.sendView("select", data.selectedIndex);
                         open(data.selectedIndex - 1, selectedMidiDevice);
+                        api.settings.set("midi_device", selectedMidiDevice);
                     }
                 ]]
             ],
