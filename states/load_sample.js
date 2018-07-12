@@ -44,7 +44,7 @@ module.exports = ({Arg0, Else}, api) => {
                 waveForm = (buffer.join("") + tmp.split("##WAVE_END##")[0])
                     .split(" ")
                     .filter(l => l.length)
-                    , map(l => parseFloat(l))
+                    .map(l => parseFloat(l))
 
                 ;
 
