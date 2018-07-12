@@ -28,6 +28,9 @@ module.exports = ({Arg0, Else}, api) => {
         stopAudio();
         let audio = spawn(path.join(__dirname, "..", "..", "audio", "BeagleAudio"), [3, `"${file}"`], {shell: true});
         let buffer = [];
+        audio.stderr.on('data', (data) => {
+            console.error(data.toString());
+        });
         audio.stdout.on('data', (data) => {
             console.log(data.toString());
 
