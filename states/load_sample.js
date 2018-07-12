@@ -35,6 +35,9 @@ module.exports = ({Arg0, Else}, api) => {
             }
             if (tmp.indexOf("##WAVE_END##") !== -1) {
                 parseWave = false;
+
+                api.send("ADC_START", [], 100);
+
                 api.sendView("waveform",
                     {
                         sound: waveForm
@@ -52,7 +55,10 @@ module.exports = ({Arg0, Else}, api) => {
             }
         });
 
-        stopAudio = () => audio.kill();
+        stopAudio = () => {
+            api.send("ADC_STOP", [], 100);
+            audio.kill();
+        }
     };
 
     let scope = {

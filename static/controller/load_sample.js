@@ -3,7 +3,7 @@ function $load_sample() {
         var zoom = 1;
         var position = 0;
         var width = 320;
-        var height = 90;
+        var height = 155;
 
         var canvas = null;
         var bar = null;
@@ -124,7 +124,6 @@ function $load_sample() {
                         break;
                     case "waveform":
                         sound = data.sound;
-                        console.log(sound);
                         draw();
                         break;
                     default:
