@@ -115,12 +115,12 @@ module.exports = ({Arg0, Else}, api) => {
                     (api, data, event) => {
                         api.pushState("midi");
                     }
-                ]],
+                ]]/*,
                 [Arg0("D"), [
                     (api, data, event) => {
                         api.pushState("sample_record", data);
                     }
-                ]]
+                ]]*/
             ],
             "ROTARY_LEFT": [
                 [Arg0("Z2"), [
