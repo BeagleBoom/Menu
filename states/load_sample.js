@@ -28,7 +28,7 @@ module.exports = ({Arg0, Else}, api) => {
         stopAudio();
         let audio = spawn(path.join(__dirname, "..", "..", "audio", "BeagleAudio"), [3, `"${file}"`], {shell: true});
         audio.stdout.on('data', (data) => {
-            console.log(data);
+            console.log(data.toString());
 
             let tmp = data.toString().replace(/(\r\n\t|\n|\r\t)/gm, "");
 
