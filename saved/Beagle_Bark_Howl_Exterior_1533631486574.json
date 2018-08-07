@@ -1,0 +1,43 @@
+{
+  "presets": [],
+  "settings": {
+    "adsr": {
+      "attack": 900,
+      "decay": 800,
+      "sustain": 0.4,
+      "release": 200
+    }
+  },
+  "meta": {
+    "id": 325475,
+    "url": "https://freesound.org/people/n_audioman/sounds/325475/",
+    "name": "Beagle_Bark_Howl_Exterior.wav",
+    "tags": [
+      "Beagle",
+      "Bark",
+      "Dog",
+      "Howl"
+    ],
+    "description": "This is a recording of a Beagle making Beagle barks and howls.",
+    "license": "http://creativecommons.org/licenses/by/3.0/",
+    "type": "wav",
+    "channels": 2,
+    "filesize": 129354,
+    "bitrate": 1569,
+    "duration": "00:00.65",
+    "samplerate": "48 kb/s",
+    "username": "n_audioman",
+    "pack": "https://freesound.org/apiv2/packs/18276/",
+    "previews": {
+      "preview-lq-ogg": "https://freesound.org/data/previews/325/325475_3554699-lq.ogg",
+      "preview-lq-mp3": "https://freesound.org/data/previews/325/325475_3554699-lq.mp3",
+      "preview-hq-ogg": "https://freesound.org/data/previews/325/325475_3554699-hq.ogg",
+      "preview-hq-mp3": "https://freesound.org/data/previews/325/325475_3554699-hq.mp3"
+    },
+    "num_downloads": 23,
+    "avg_rating": 0,
+    "num_ratings": 0,
+    "mono": false,
+    "preview": "https://freesound.org/data/previews/325/325475_3554699-hq.mp3"
+  }
+}
