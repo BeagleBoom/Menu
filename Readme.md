@@ -4,6 +4,8 @@ This repository is part of the [BeagleBoom](https://github.com/beagleboom)-Sampl
 # What is it used for?
 ![docs/screenshot.png](docs/screenshot.png)
 
+![docs/BeagleMenuDemo.gif](docs/BeagleMenuDemo.gif)
+
 This repository is the Browser frontend for the BeagleBoom project. 
 
 # Prerequirements
