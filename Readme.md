@@ -32,8 +32,8 @@ By default, a webserver is started on port `8080` and two pages are exposed.
 # Use new events
 The BeagleQueue library is not used directly and events added to it have to be added to the Menu as well. This can either be done by adding the event name at the same position as in the enum in the file [lib/QueueEventEnum.js](lib/QueueEventEnum.js) or by automatic generation. The generation is done by the script `node src/EventTypes`. The script will parse the C++ enum and output the code which can be put into the [lib/QueueEventEnum.js](lib/QueueEventEnum.js) file.
 
-# License
-The content and source code of this project itself is licensed under the [Creative Commons Attribution 4.0 International license](https://creativecommons.org/licenses/by/4.0/).
-
 # About this repository
 This repository is part of the [BeagleBoom](https://github.com/beagleboom)-Sampler project developed by the academic working group "[Creative Technologies AG](http://www.creative-technologies.de/)" (ctag) at the [University of Applied Sciences Kiel](https://www.fh-kiel.de/).
+
+# License
+The content and source code of this project itself is licensed under the [Creative Commons Attribution 4.0 International license](https://creativecommons.org/licenses/by/4.0/).
