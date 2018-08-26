@@ -28,7 +28,7 @@ By default, a webserver is started on port `8080` and two pages are exposed.
 - http://[BEAGLE_BOOM_IP]:8080/remote.html => The screen in conjunction with all rotary encoders and buttons (in form of html buttons). Additionaly a textbox is present for fast text input.
 
 # Creating custom states
-[https://github.com/BeagleBoom/Menu/wiki/States ](See the Wiki)
+[https://github.com/BeagleBoom/Menu/wiki/States]( See the Wiki)
 
 # About this repository
 This repository is part of the [BeagleBoom](https://github.com/beagleboom)-Sampler project developed by the academic working group "[Creative Technologies AG](http://www.creative-technologies.de/)" (ctag) at the [University of Applied Sciences Kiel](https://www.fh-kiel.de/).
