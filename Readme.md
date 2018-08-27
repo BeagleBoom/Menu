@@ -21,6 +21,8 @@ yarn install
 ## Start
 Start the menu with `pm2 start index.js -- 1`
 
+The `1` stands for the recipientId of the menu.
+
 # Remote Screen and Control
 By default, a webserver is started on port `8080` and two pages are exposed.
 
