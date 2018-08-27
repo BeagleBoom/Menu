@@ -27,8 +27,8 @@ By default, a webserver is started on port `8080` and two pages are exposed.
 - http://[BEAGLE_BOOM_IP]:8080/index.html => A non interactable rendering of the screen. Used internally by the BeagleBoom on the LCD.
 - http://[BEAGLE_BOOM_IP]:8080/remote.html => The screen in conjunction with all rotary encoders and buttons (in form of html buttons). Additionaly a textbox is present for fast text input.
 
-# Creating custom states
-[See the wiki.](https://github.com/BeagleBoom/Menu/wiki/States)
+# Creating custom states and views
+[See the wiki.](https://github.com/BeagleBoom/Menu/wiki/Home)
 # Use new events
 The BeagleQueue library is not used directly and events added to it have to be added to the Menu as well. This can either be done by adding the event name at the same position as in the enum in the file [lib/QueueEventEnum.js](lib/QueueEventEnum.js) or by automatic generation. The generation is done by the script `node src/EventTypes`. The script will parse the C++ enum and output the code which can be put into the [lib/QueueEventEnum.js](lib/QueueEventEnum.js) file.
 
